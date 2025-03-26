@@ -1,0 +1,32 @@
+[
+  {
+    "gestor_id": 0,
+    "nome": "Carlos Mendes",
+    "nivel": 1,
+    "setorResp": "Todos",
+    "email": "carlosmendes@mail.com",
+    "senha":"hash_senha",
+    "Foto": "https://linkfoto.com/foto_gestor_id-0",
+    "status": "Ativo"
+  },
+  {
+    "gestor_id": 1,
+    "nome": "Alice Satana",
+    "nivel": 2,
+    "setorResp": "SEMOP",
+    "email": "alicesantana@mail.com",
+    "senha":"hash_senha",
+    "Foto": "https://linkfoto.com/foto_gestor_id-0",
+    "status": "Ativo"
+  },
+  {
+    "gestor_id": 2,
+    "nome": "Matheus Cardoso",
+    "nivel": 2,
+    "setorResp": "SEDUR",
+    "email": "matheuscardoso@mail.com",
+    "senha":"hash_senha",
+    "Foto": "https://linkfoto.com/foto_gestor_id-0",
+    "status": "Ativo"
+  }
+]

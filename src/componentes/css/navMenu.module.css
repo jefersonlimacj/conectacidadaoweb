@@ -1,0 +1,146 @@
+aside {
+  z-index: 2;
+  height: 100vh;
+  width: 12vw;
+  background: #fff;
+  position: fixed;
+  display: flex;
+  left: 0;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  padding: 8vh 0 0 0;
+  box-shadow: #00000025 2px 0 5px;
+}
+
+footer {
+  height: 60vh;
+  padding-bottom: 15px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+/* Sidebar */
+.userInfo {
+  text-align: center;
+  padding: 5px 0;
+}
+
+.userInfo img {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: #00000025 2px 2px 7px;
+}
+
+.userInfo p {
+  font-weight: bold;
+  color: #055695;
+  font-size: 1rem;
+}
+
+.userInfo span {
+  font-size: 0.8rem;
+  color: gray;
+}
+/* Menu */
+.menu ul {
+  list-style: none;
+}
+
+.menu ul li {
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #333;
+  border-bottom: 1px solid #99999950;
+  transition: 0.2s;
+}
+
+.menu ul li span {
+  margin-right: 10px;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.menu ul li i {
+  box-sizing: border-box;
+  font-size: 1.2rem;
+}
+
+.menu ul li:hover span {
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.menu ul li:hover {
+  border-left: 5px solid #26bdfe;
+  background: #dddddd35;
+}
+
+/*SubMenu*/
+
+.subMenu {
+  background: #ffffffBB;
+  backdrop-filter: blur(5px);
+  height: 100vh;
+  width: 12vw;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: -1;
+  left: -50%;
+  top: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: ease-in-out 0.3s;
+  padding: 8vh 0 0 0;
+  border: 1px solid #99999950;
+}
+
+.subMenu .headSubMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffffaa;
+  height: 10%;
+  border-bottom: 1px solid #99999950;
+}
+
+.menu ul li:hover .subMenu {
+  display: flex;
+  left: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+.subMenu ul li {
+  padding: 8px 10px;
+  display: flex;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #333;
+  border-bottom: 1px solid #99999950;
+  transition: 0.2s;
+  margin: 0;
+}
+
+.subMenu ul li:hover {
+  background-color: #ffffff;
+  border-bottom: 1px solid #99999950;
+}
+
+.servicos {
+  width: 20vw;
+  left: -100%;
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 0.7rem;
+}

@@ -1,0 +1,280 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  max-width: 100vw;
+}
+
+.section {
+  margin-left: 12vw;
+  margin-top: 8vh;
+  width: 88vw;
+  height: 92vh;
+  min-height: 92vh;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.base {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px;
+}
+
+.linhaHead {
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #ffffffcc;
+  box-shadow: 2px 2px 5px #00000025;
+}
+
+.infos {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 60%;
+}
+
+.iconCategoria {
+  aspect-ratio: 1;
+  height: 100%;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease-in-out;
+}
+
+.iconCategoria span {
+  color: white;
+  font-size: 10vh;
+}
+
+.dadosSolicitacao {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dadosSolicitacao p {
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tituloSubCategoria {
+  font-size: 1.5rem;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subTituloCategoria {
+  font-size: large;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fotos {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.foto {
+  aspect-ratio: 1;
+  height: 100%;
+  border-radius: 15px;
+  background-color: #e1e1e1;
+  border: 3px solid white;
+  box-shadow: 1px 1px 5px #00000025;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.infosE {
+  width: 40%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.campoComentario {
+  background-color: #ffffffaa;
+  border-radius: 10px;
+  width: 100%;
+  height: 40%;
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.campoComentario p {
+  font-size: smaller;
+  text-align: justify;
+}
+
+.registroD {
+  width: 60%;
+  height: 50vh;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #eee;
+  box-shadow: 2px 2px 5px #00000025;
+}
+
+.espSetor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 15px;
+}
+
+.circuloIcone {
+  background-color: white;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.alterarStatus {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  border-radius: 50px;
+  background-color: #055695;
+  transition: 0.2s ease-in-out;
+}
+
+.alterarStatus p {
+  color: white;
+}
+
+.alterarStatus select {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 5px;
+  text-align: right;
+}
+
+input, select {
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid #d4d4d4;
+}
+
+.opGestorL1 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 15px;
+}
+
+.opGestorL2 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.opGestorL2 textarea {
+  height: 100%;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #d4d4d4;
+}
+
+.inputFotos {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.carregarFoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  height: 20vh;
+  border-radius: 15px;
+  background-color: #e1e1e1;
+  border: 3px solid white;
+  box-shadow: 1px 1px 5px #00000025;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.rodapeSolicitacao {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  gap: 15px;
+}
+
+.rodapeSolicitacao button {
+  height: 5vh;
+  padding: 0 15px;
+  border-radius: 30px;
+  border: none;
+  background-color: #055695;
+  color: white;
+}
+
+.dividerH {
+  height: 1px;
+  width: 100%;
+  background-color: #aaa;
+}
+
+.tabelaAtt{
+  font-size: smaller;
+  margin-bottom: 20px;
+}

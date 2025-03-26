@@ -1,0 +1,10 @@
+.telaMapa {
+  display: flex;
+  width: 88vw;
+  height: 92vh;
+  background-color: greenyellow;
+}
+
+iframe {
+  width: 100%;
+}

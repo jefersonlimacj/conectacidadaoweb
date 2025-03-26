@@ -1,0 +1,65 @@
+.mainContainer {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  background-image: url('/assets/Img-Isologo.png');
+  background-repeat: no-repeat;
+  background-size: 100vh;
+  background-position: -10% 30%;
+}
+
+.loginPlace{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*
+@media (max-width: 768px) {
+  .main-container {
+    background-size: contain;
+    background-position: -20% 30%;
+  }
+
+  .cx-login {
+    width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    background-size: cover;
+    background-position: -20% 30%;
+  }
+
+  .cx-login {
+    width: 80%;
+    height: 60%;
+  }
+
+  .cx-column {
+    justify-content: flex-start;
+  }
+
+  .cx-column form {
+    height: 50%;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .contImagem img {
+    height: 80px;
+    width: auto;
+  }
+}*/

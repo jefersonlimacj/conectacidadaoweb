@@ -1,0 +1,155 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  max-width: 100vw;
+}
+
+.section {
+  margin-left: 12vw;
+  margin-top: 8vh;
+  width: 88vw;
+  min-height: 92vh;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  justify-content: start;
+  padding: 15px;
+}
+
+.base {
+  width: 100%;
+  height: 100%;
+  padding: 15px 0;
+  border-radius: 15px;
+  box-shadow: 2px 2px 7px #00000025;
+  border: 1px solid #cccccc;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.topoEdit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.dividerH {
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.editCategorias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.formLinha1 {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputNome {
+  width: 100%;
+}
+
+.formLinha2 {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.inputL2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.inputColor {
+  height: 40px;
+  aspect-ratio: 1;
+}
+
+.formLinha3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.previaIcone {
+  width: 10vw;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.previaIcone span {
+  font-size: 5vw;
+}
+
+.cadastroNovaSubCat {
+  width: 100%;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.cadastroNovaSubCat input{
+  width: 50%;
+}
+.cadastroNovaSubCat p{
+  width: 20%;
+}
+
+.cadastroNovaSubCat div{
+  width: 15%;
+}
+
+.cadastroNovaSubCat button {
+  width: 25%;
+}
+
+.cadastroNovaSubCat span{
+  color: white
+}
+
+.tabelaSubcategorias{
+  margin: 15px;
+  text-align: left;
+  font-size: small;
+}
+
+.tabelaSubcategorias span{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+  width: 4vw;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.tabelaSubcategorias span:hover{
+  background-color: #BBB;
+}
