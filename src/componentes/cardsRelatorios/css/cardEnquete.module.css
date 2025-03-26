@@ -1,0 +1,57 @@
+.base{
+    width: 20vw;
+    height: 45%;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 2px 2px 7px #00000025;
+    border: 1px solid #cccccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 15px 0 15px;
+  }
+
+.grafico{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p{
+    text-align: center;
+    font-size: small;
+}
+
+.dividerH{
+    width: 100%;
+    height: 1px;
+    background-color: #cccccc;
+    margin: 0px;
+}
+
+.indice{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.bloc{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #cccccc;
+}
+
+.blocA{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #055695;
+}
+
+

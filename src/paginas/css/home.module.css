@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.section {
+  margin-left: 12vw;
+  background-color: #6edb2fc4;
+  margin-top: 8vh;
+  height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

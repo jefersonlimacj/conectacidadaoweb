@@ -1,0 +1,48 @@
+
+.restanteSolicitacoes {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    gap: 15px;
+    border-radius: 10px;
+    background-color: #E8A25C;
+    box-shadow: 2px 2px 8px #c46d1650;
+    cursor: pointer;
+  }
+  
+  .restanteSolicitacoes p {
+    text-align: right;
+    color: white;
+  }
+  
+  .iconProcessando {
+    color: white;
+    font-size: 5rem;
+  }
+  
+  .titulo h1 {
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .titulo {
+    width: 35%;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .graficoProcessando {
+    width: 65%;
+    height: 20vh;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  

@@ -1,0 +1,144 @@
+.base {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 2px 2px 7px #00000025;
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.camposFiltro {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+button {
+  background-color: #055695;
+  border: none;
+  width: 20%;
+  padding: 6px;
+  align-self: center;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+table {
+  border-radius: 12px;
+  border-collapse: collapse;
+}
+
+thead {
+  border-bottom: 1px solid #aaa;
+}
+
+th {
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+tr td {
+  padding: 5px 0;
+  cursor:context-menu
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+  transition: 0.2s ease-in-out;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+  transition: 0.2s ease-in-out;
+}
+
+tbody tr:nth-child(odd):hover {
+  background-color: #e3e3e3;
+}
+
+tbody tr:nth-child(even):hover {
+  background-color: #d3d3d3;
+}
+
+.iconCategoria {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: 0.2s ease-in-out;
+}
+
+.iconStatus {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: 0.2s ease-in-out;
+  color: #fff;
+}
+
+tr:hover .iconCategoria {
+  opacity: 1;
+}
+
+tr:hover .iconStatus {
+  opacity: 1;
+}
+
+.iconCategoria span {
+  color: white;
+  font-size: medium;
+}
+
+.iconStatus span {
+  color: white;
+  font-size: medium;
+}
+
+td button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+tr:nth-child(odd) td button {
+  background-color: #ddd;
+  transition: 0.2s ease-in-out;
+}
+
+tr:nth-child(even) td button {
+  background-color: #ddd;
+  transition: 0.2s ease-in-out;
+}
+
+tr:nth-child(odd):hover td button {
+  background-color: #ccc;
+}
+
+tr:nth-child(even):hover td button {
+  background-color: #bbb;
+}
+
+td button:hover {
+  box-shadow: 1px 1px 3px #00000030;
+}

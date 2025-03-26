@@ -1,0 +1,32 @@
+[
+    {
+       "id": 0,
+       "icone": "block",
+       "cor": "#CC3A3A",
+       "status": "Pedido Negado"
+    },
+    {
+       "id":1,
+       "icone": "help",
+       "cor": "#E8A25C",
+       "status": "Processando Envio"
+    },
+    {
+       "id": 2,
+       "icone": "schedule",
+       "cor": "#E5CE00",
+       "status": "Aguardando Resposta"
+    },
+    {
+       "id": 3,
+       "icone": "pending_actions",
+       "cor": "#6399C2",
+       "status": "Atendimento Agendado"
+    },
+    {
+       "id": 4,
+       "icone": "check_circle",
+       "cor": "#57CE6E",
+       "status": "Solicitação Atendida"
+    }
+]

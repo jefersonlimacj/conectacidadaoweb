@@ -1,0 +1,62 @@
+.base {
+  width: 64vw;
+  height: 40%;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 2px 2px 7px #00000025;
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.grafico {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+p {
+  text-align: center;
+  font-size: small;
+}
+
+.linhaSolicitacaoTabela {
+  width: 100%;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+}
+
+.linhaSolicitacao {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #8f8f8f;
+}
+
+.linha {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 30px;
+}
+
+.espLinha {
+  width: 8vw;
+  margin: 0 1px;
+}
+
+.linha p {
+  font-size: 0.6rem;
+}

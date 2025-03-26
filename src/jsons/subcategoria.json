@@ -1,0 +1,287 @@
+[
+    {
+        "subcategoria_id": 0,
+        "nome": "Falta de Água",
+        "categoria_id": 0
+    },
+    {
+        "subcategoria_id": 1,
+        "nome": "Esgoto Entupido",
+        "categoria_id": 0
+    },
+    {
+        "subcategoria_id": 2,
+        "nome": "Vazamento de Água",
+        "categoria_id": 0
+    },
+    {
+        "subcategoria_id": 3,
+        "nome": "Falta de Saneamento Básico",
+        "categoria_id": 0
+    },
+    {
+        "subcategoria_id": 4,
+        "nome": "Água Contaminada",
+        "categoria_id": 0
+    },
+    
+    {
+        "subcategoria_id": 5,
+        "nome": "Ambulantes Irregulares",
+        "categoria_id": 1
+    },
+    {
+        "subcategoria_id": 6,
+        "nome": "Feiras Livres Sem Autorização",
+        "categoria_id": 1
+    },
+    {
+        "subcategoria_id": 7,
+        "nome": "Venda de Produtos Ilegais",
+        "categoria_id": 1
+    },
+    {
+        "subcategoria_id": 8,
+        "nome": "Ocupação Irregular de Calçadas",
+        "categoria_id": 1
+    },
+    {
+        "subcategoria_id": 9,
+        "nome": "Comércio em Área Pública Sem Permissão",
+        "categoria_id": 1
+    },
+    
+    {
+        "subcategoria_id": 10,
+        "nome": "Lâmpada Queimada",
+        "categoria_id": 2
+    },
+    {
+        "subcategoria_id": 11,
+        "nome": "Fiação Exposta",
+        "categoria_id": 2
+    },
+    {
+        "subcategoria_id": 12,
+        "nome": "Poste Danificado",
+        "categoria_id": 2
+    },
+    {
+        "subcategoria_id": 13,
+        "nome": "Queda de Energia",
+        "categoria_id": 2
+    },
+    {
+        "subcategoria_id": 14,
+        "nome": "Instalação Irregular de Fiação",
+        "categoria_id": 2
+    },
+    
+    {
+        "subcategoria_id": 15,
+        "nome": "Acúmulo de Lixo",
+        "categoria_id": 3
+    },
+    {
+        "subcategoria_id": 16,
+        "nome": "Terreno Baldio Sujo",
+        "categoria_id": 3
+    },
+    {
+        "subcategoria_id": 17,
+        "nome": "Entulho em Via Pública",
+        "categoria_id": 3
+    },
+    {
+        "subcategoria_id": 18,
+        "nome": "Coleta de Lixo Irregular",
+        "categoria_id": 3
+    },
+    {
+        "subcategoria_id": 19,
+        "nome": "Poda de Árvores Necessária",
+        "categoria_id": 3
+    },
+    
+    {
+        "subcategoria_id": 20,
+        "nome": "Desmatamento Ilegal",
+        "categoria_id": 4
+    },
+    {
+        "subcategoria_id": 21,
+        "nome": "Poluição Sonora",
+        "categoria_id": 4
+    },
+    {
+        "subcategoria_id": 22,
+        "nome": "Queimada Irregular",
+        "categoria_id": 4
+    },
+    {
+        "subcategoria_id": 23,
+        "nome": "Descarte Irregular de Resíduos",
+        "categoria_id": 4
+    },
+    {
+        "subcategoria_id": 24,
+        "nome": "Poluição de Rios e Lagos",
+        "categoria_id": 4
+    },
+    
+    {
+        "subcategoria_id": 25,
+        "nome": "Calçada Danificada",
+        "categoria_id": 5
+    },
+    {
+        "subcategoria_id": 26,
+        "nome": "Falta de Faixa de Pedestre",
+        "categoria_id": 5
+    },
+    {
+        "subcategoria_id": 27,
+        "nome": "Ciclovia Mal Sinalizada",
+        "categoria_id": 5
+    },
+    {
+        "subcategoria_id": 28,
+        "nome": "Obstáculo em Calçada",
+        "categoria_id": 5
+    },
+    {
+        "subcategoria_id": 29,
+        "nome": "Falta de Rampas de Acessibilidade",
+        "categoria_id": 5
+    },
+    
+    {
+        "subcategoria_id": 30,
+        "nome": "Posto de Saúde Fechado",
+        "categoria_id": 6
+    },
+    {
+        "subcategoria_id": 31,
+        "nome": "Falta de Medicamentos",
+        "categoria_id": 6
+    },
+    {
+        "subcategoria_id": 32,
+        "nome": "Fila Exagerada em Unidade de Saúde",
+        "categoria_id": 6
+    },
+    {
+        "subcategoria_id": 33,
+        "nome": "Falta de Profissionais na Saúde",
+        "categoria_id": 6
+    },
+    {
+        "subcategoria_id": 34,
+        "nome": "Ambulância Demorando Demais",
+        "categoria_id": 6
+    },
+    
+    {
+        "subcategoria_id": 35,
+        "nome": "Falta de Iluminação Pública",
+        "categoria_id": 7
+    },
+    {
+        "subcategoria_id": 36,
+        "nome": "Área de Risco",
+        "categoria_id": 7
+    },
+    {
+        "subcategoria_id": 37,
+        "nome": "Atos de Vandalismo",
+        "categoria_id": 7
+    },
+    {
+        "subcategoria_id": 38,
+        "nome": "Falta de Sinalização",
+        "categoria_id": 7
+    },
+    {
+        "subcategoria_id": 39,
+        "nome": "Necessidade de Ronda Policial",
+        "categoria_id": 7
+    },
+    
+    {
+        "subcategoria_id": 40,
+        "nome": "Ponto de Ônibus Danificado",
+        "categoria_id": 8
+    },
+    {
+        "subcategoria_id": 41,
+        "nome": "Atraso em Linhas de Ônibus",
+        "categoria_id": 8
+    },
+    {
+        "subcategoria_id": 42,
+        "nome": "Superlotação de Ônibus",
+        "categoria_id": 8
+    },
+    {
+        "subcategoria_id": 43,
+        "nome": "Falta de Acessibilidade no Transporte",
+        "categoria_id": 8
+    },
+    {
+        "subcategoria_id": 44,
+        "nome": "Motorista Dirigindo de Forma Imprudente",
+        "categoria_id": 8
+    },
+    
+    {
+        "subcategoria_id": 45,
+        "nome": "Praça Mal Cuidada",
+        "categoria_id": 9
+    },
+    {
+        "subcategoria_id": 46,
+        "nome": "Falta de Áreas de Lazer",
+        "categoria_id": 9
+    },
+    {
+        "subcategoria_id": 47,
+        "nome": "Obra Irregular",
+        "categoria_id": 9
+    },
+    {
+        "subcategoria_id": 48,
+        "nome": "Falta de Arborização",
+        "categoria_id": 9
+    },
+    {
+        "subcategoria_id": 49,
+        "nome": "Construção Bloqueando Via Pública",
+        "categoria_id": 9
+    },
+    
+    {
+        "subcategoria_id": 50,
+        "nome": "Buraco na Rua",
+        "categoria_id": 10
+    },
+    {
+        "subcategoria_id": 51,
+        "nome": "Semáforo Quebrado",
+        "categoria_id": 10
+    },
+    {
+        "subcategoria_id": 52,
+        "nome": "Falta de Placa de Trânsito",
+        "categoria_id": 10
+    },
+    {
+        "subcategoria_id": 53,
+        "nome": "Acidente de Trânsito",
+        "categoria_id": 10
+    },
+    {
+        "subcategoria_id": 54,
+        "nome": "Falta de Faixa de Pedestre",
+        "categoria_id": 10
+    }
+]

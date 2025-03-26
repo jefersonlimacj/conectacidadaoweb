@@ -1,0 +1,24 @@
+* {
+  font-family: "lexend", serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #4d4d4d;
+}
+
+a {
+  color: #055695;
+  text-decoration: none;
+  font-size: smaller;
+}
+
+a:hover {
+  color: #012a49;
+}
+
+body {
+  background-color: #f6f8fa;
+  height: 100vh;
+  max-width: 100wh;
+  min-width: 100wh;
+}
