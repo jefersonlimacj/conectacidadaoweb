@@ -30,8 +30,8 @@ function CategoriaEdit() {
         categoria: ct_id,
       };
       console.log(novaSubCategoria);
-      setSubcategorias([...subCategorias, novaSubCategoria])
-      setNomeSubCat("")
+      setSubcategorias([...subCategorias, novaSubCategoria]);
+      setNomeSubCat("");
     }
   };
 
@@ -174,7 +174,9 @@ function CategoriaEdit() {
                   return (
                     <tr key={subcategoria.subcategoria_id}>
                       <td>{subcategoria.subcategoria_id}</td>
-                      <td>{subcategoria.nome}</td>
+                      <td>
+                        <input type="text" placeholder={subcategoria.nome} className={style.inputLista}/>
+                      </td>
                       <td>
                         <span className="material-symbols-rounded">edit</span>
                       </td>

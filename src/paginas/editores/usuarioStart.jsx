@@ -4,7 +4,6 @@ import TopMenu from "../../componentes/top-menu";
 import style from "../../paginas/css/usuarioedit.module.css";
 import api from "../../../service/api";
 
-
 function CriarUsuario() {
   const [verSenha, setVerSenha] = useState(false);
   const [verSenhaR, setVerSenhaR] = useState(false);
@@ -16,6 +15,8 @@ function CriarUsuario() {
 
   const [divMsg, setDivMsg] = useState("");
   const [divMsg2, setDivMsg2] = useState("");
+
+  const [inputImagemUsuario, setInputImagemUsuario] = useState("");
 
   const inputNome = useRef();
   const inputSobrenome = useRef();
@@ -135,6 +136,29 @@ function CriarUsuario() {
 
     console.log(sqlCreate, sqlEndereco);
   }
+
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post("/cadastrar", { nome, email, senha });
+      alert(response.data.mensagem);
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error);
+    }
+  };
+
+  const carregarImagemCad = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setInputImagemUsuario(imageUrl);
+    }
+  };
+
   return (
     <>
       <TopMenu />
@@ -155,7 +179,7 @@ function CriarUsuario() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "70%",
+                    width: "80%",
                   }}
                 >
                   <div
@@ -163,7 +187,12 @@ function CriarUsuario() {
                       width: "100%",
                     }}
                   >
-                    <input type="text" placeholder="Nome" ref={inputNome} />
+                    <input
+                      type="text"
+                      placeholder="Nome"
+                      ref={inputNome}
+                      onChange={(e) => setNome(e.target.value)}
+                    />
                     <input
                       type="text"
                       placeholder="Sobrenome"
@@ -215,13 +244,25 @@ function CriarUsuario() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    backgroundColor: "yellow",
-                    width: "30%",
+                    width: "20%",
                     height: "20vh",
                   }}
                 >
-                  foto
-                  <input type="text" id="foto" ref={inputFoto} />
+                  <label
+                    className={style.carregarFoto}
+                    style={{ backgroundImage: `url(${inputImagemUsuario})` }}
+                  >
+                    <span className="material-symbols-rounded">
+                      add_a_photo
+                    </span>
+                    <input
+                      type="file"
+                      alt="Sem Foto"
+                      typeof="image/*"
+                      name="fotoUsuario"
+                      onChange={carregarImagemCad}
+                    />
+                  </label>
                 </div>
               </div>
 
@@ -230,7 +271,10 @@ function CriarUsuario() {
               <input
                 type="text"
                 placeholder="e-mail"
-                onChange={(e) => setEmailCheck(e.target.value)}
+                onChange={(e) => {
+                  setEmailCheck(e.target.value);
+                  setEmail(e.target.value);
+                }}
                 ref={inputEmail}
               />
               <input
@@ -258,7 +302,10 @@ function CriarUsuario() {
                   <input
                     type={verSenhaR === false ? "password" : "text"}
                     placeholder="Repita a senha"
-                    onChange={(e) => setSenhaReCheck(e.target.value)}
+                    onChange={(e) => {
+                      setSenhaReCheck(e.target.value);
+                      setSenha(e.target.value);
+                    }}
                   />
                   <span
                     className="material-symbols-rounded"
@@ -317,11 +364,10 @@ function CriarUsuario() {
               </div>
               <div className={style.dividerH} />
             </form>
-            <button className={style.submitBtn} onClick={criarUsuario}>
+            <button className={style.submitBtn} onClick={handleSubmit}>
               Cadastrar
             </button>
           </div>
-          
         </div>
       </div>
     </>

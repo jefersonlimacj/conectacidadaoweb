@@ -191,10 +191,12 @@
   text-align: right;
 }
 
-input, select {
+input,
+select {
   padding: 5px 10px;
   border-radius: 15px;
   border: 1px solid #d4d4d4;
+  outline: none
 }
 
 .opGestorL1 {
@@ -274,7 +276,7 @@ input[type="file"] {
   background-color: #aaa;
 }
 
-.tabelaAtt{
+.tabelaAtt {
   font-size: smaller;
   margin-bottom: 20px;
 }

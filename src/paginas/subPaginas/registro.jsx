@@ -63,6 +63,10 @@ function Registro() {
 
   const [status, setStatus] = useState(solicitacao.status);
 
+  const [img1, setImg1] = useState("");
+  const [img2, setImg2] = useState("");
+  const [img3, setImg3] = useState("");
+
   const [iconStatus, setIconStatus] = useState(
     statusIcones[solicitacao.status] || [
       "Não Encontrado",
@@ -130,6 +134,25 @@ function Registro() {
   const urlImage = `https://picsum.photos/seed/${solicitacao.id}-1/200`;
   const urlImage1 = `https://picsum.photos/seed/${solicitacao.id}-3/200`;
   const urlImage2 = `https://picsum.photos/seed/${solicitacao.id}-7/200`;
+
+  const carregarImg1 = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setImg1(imageUrl);
+    }
+  };
+  const carregarImg2 = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setImg2(imageUrl);
+    }
+  };
+  const carregarImg3 = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setImg3(imageUrl);
+    }
+  };
 
   return (
     <>
@@ -244,6 +267,8 @@ function Registro() {
               </div>
               <div className={style.registroD}>
                 <div className={style.status}>
+                  <p>Vincular:</p>
+                  <input type="text" />
                   <p>Status Atual:</p>
                   <div
                     className={style.alterarStatus}
@@ -333,7 +358,7 @@ function Registro() {
                     }}
                   >
                     <p>Justificativa do Gestor</p>
-                    <textarea
+                    <textarea style={{outline:"none"}}
                       name=""
                       id=""
                       placeholder="Deixe seu comentário aqui..."
@@ -350,31 +375,43 @@ function Registro() {
                   >
                     <p>Adicione as fotos:</p>
                     <div className={style.inputFotos}>
-                      <label className={style.carregarFoto}>
+                      <label
+                        className={style.carregarFoto}
+                        style={{ backgroundImage: `url(${img1})` }}
+                      >
                         <span className="material-symbols-rounded">
                           add_a_photo
                         </span>
                         <input
                           type="file"
                           alt={`Foto 1 Gestor: prot.: ${solicitacao.protocolo}`}
+                          onChange={carregarImg1}
                         />
                       </label>
-                      <label className={style.carregarFoto}>
+                      <label
+                        className={style.carregarFoto}
+                        style={{ backgroundImage: `url(${img2})` }}
+                      >
                         <span className="material-symbols-rounded">
                           add_a_photo
                         </span>
                         <input
                           type="file"
                           alt={`Foto 2 Gestor: prot.: ${solicitacao.protocolo}`}
+                          onChange={carregarImg2}
                         />
                       </label>
-                      <label className={style.carregarFoto}>
+                      <label
+                        className={style.carregarFoto}
+                        style={{ backgroundImage: `url(${img3})` }}
+                      >
                         <span className="material-symbols-rounded">
                           add_a_photo
                         </span>
                         <input
                           type="file"
                           alt={`Foto 3 Gestor: prot.: ${solicitacao.protocolo}`}
+                          onChange={carregarImg3}
                         />
                       </label>
                     </div>

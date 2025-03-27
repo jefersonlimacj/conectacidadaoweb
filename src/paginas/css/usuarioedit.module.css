@@ -98,3 +98,18 @@
     cursor: pointer;
   }
 }
+
+.carregarFoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  height: 20vh;
+  border-radius: 15px;
+  background-color: #e1e1e1;
+  border: 3px solid white;
+  box-shadow: 1px 1px 5px #00000025;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
