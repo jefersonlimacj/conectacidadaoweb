@@ -358,7 +358,8 @@ function Registro() {
                     }}
                   >
                     <p>Justificativa do Gestor</p>
-                    <textarea style={{outline:"none"}}
+                    <textarea
+                      style={{ outline: "none" }}
                       name=""
                       id=""
                       placeholder="Deixe seu comentário aqui..."
@@ -380,7 +381,7 @@ function Registro() {
                         style={{ backgroundImage: `url(${img1})` }}
                       >
                         <span className="material-symbols-rounded">
-                          add_a_photo
+                          {img1 === "" ? "add_a_photo" : ""}
                         </span>
                         <input
                           type="file"
@@ -393,7 +394,7 @@ function Registro() {
                         style={{ backgroundImage: `url(${img2})` }}
                       >
                         <span className="material-symbols-rounded">
-                          add_a_photo
+                          {img2 === "" ? "add_a_photo" : ""}
                         </span>
                         <input
                           type="file"
@@ -406,7 +407,7 @@ function Registro() {
                         style={{ backgroundImage: `url(${img3})` }}
                       >
                         <span className="material-symbols-rounded">
-                          add_a_photo
+                          {img3 === "" ? "add_a_photo" : ""}
                         </span>
                         <input
                           type="file"

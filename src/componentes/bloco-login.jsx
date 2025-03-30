@@ -9,14 +9,21 @@ function BlocoLogin() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const logarUsuario = async (event) => {
+    event.preventDefault(); // Evita o recarregamento da página
 
     try {
       const response = await api.post("/login", { email, senha });
-      navigate("/home");
+
+      if (response.status === 200) { //Se OK no servidor redireciona, ainda preciso criar o tokem para autenticação
+        navigate("/home");
+      } else {
+        console.error("Login falhou. Status:", response.status);
+      }
     } catch (error) {
-      console.error("Erro ao cadastrar:", error);
+      console.error("Erro ao fazer login:", error);
     }
+  
   };
 
   return (
@@ -26,7 +33,7 @@ function BlocoLogin() {
           <div className={style.contImagem}>
             <img src="assets/Conecta_Cidadao_logo1.png" />
           </div>
-          <form action={handleSubmit} className={style.login}>
+          <form className={style.login} onSubmit={logarUsuario}>
             <input
               type="email"
               name=""
@@ -42,7 +49,9 @@ function BlocoLogin() {
               onChange={(e) => setSenha(e.target.value)}
             />
             <div className={style.fimForm}>
-              <button type="submit">Entrar</button>
+              <button type="submit">
+                Entrar
+              </button>
               <a href="/inatividade">Esqueci minha senha</a>
             </div>
           </form>
