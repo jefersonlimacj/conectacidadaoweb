@@ -9,6 +9,7 @@ import IdadeUsuario from "../componentes/cardsRelatorios/cardIdadeUsuario";
 import api from "../../service/api";
 import { useState, useEffect } from "react";
 
+
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [dataNasc, setDataNasc] = useState();

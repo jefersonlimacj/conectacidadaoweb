@@ -1,60 +1,25 @@
 import { useParams, useNavigate } from "react-router-dom";
-import usuarios from "../../jsons/usuarios.json";
 import TopMenu from "../../componentes/top-menu";
 import NavMenu from "../../componentes/nav-menu";
 import CardTabela from "../../componentes/cardsRelatorios/cardTabela";
 import style from "../css/usuario.module.css";
 import solicitacoesEfetuadas from "../../jsons/solicitacoesEfeturadas.json";
-import { useEffect, useState } from "react";
 import api from "../../../service/api.jsx";
+import useUsuario from "../../../service/hooks/hookUsuario.jsx";
 
 function Usuario() {
   const navigate = useNavigate();
 
   const { u_id } = useParams();
-  const [usuario, setUsuario] = useState(usuarios[0]);
-  const [dataNasc, setDataNasc] = useState();
+
+  const {usuario, statusUsuario, setStatusUsuario, dataNasc, loading, erro, alterarStatus} = useUsuario(u_id)
+
+  if (loading) return <p>Carregando...</p>;
+  if (erro) return <p>Erro ao carregar usuário</p>;
+
   const fotoUsuario = usuario.foto;
 
-  useEffect(() => {
-    const pegarUsuario = async () => {
-      try {
-        const dadosUsuario = await api.get(`/cadastro/usuarios/${u_id}`);
-        setUsuario(dadosUsuario.data.result[0]); // Atualiza o estado do Usuário com os dados recebidos
-        setStatusUsuario(dadosUsuario.data.result[0].statusUsuario);
-        const dataISO = dadosUsuario.data.result[0].dataNascimento; //Pega a data em formato YYYY-MM-DDTHH:mm:ss.sssZ
-        setDataNasc(dataISO.split("T")[0]); //Transforma a data em yyyy-MM-DD
-      } catch (error) {
-        console.error("Erro ao buscar usuário:", error);
-      }
-    };
-
-    if (u_id) {
-      pegarUsuario(); // Apenas chama a função se u_id existir
-    }
-  }, [u_id]);
-
-  const alterarStatus = async () => {
-    try {
-
-      const atualizacaoStatus = statusUsuario === "ativo" ? "inativo" : "ativo";
-
-      const response = await api.patch(`/cadastro/usuarios/${u_id}`, {
-        statusUsuario: atualizacaoStatus,
-      });
-
-      if (response.status === 200){        
-      setStatusUsuario(atualizacaoStatus);
-      }
-
-      console.log(statusUsuario);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const [statusUsuario, setStatusUsuario] = useState();
-
+  
   const idade = (dataNascimento) => {
     const data = new Date();
     const dataNasc = new Date(dataNascimento);
@@ -153,7 +118,7 @@ function Usuario() {
                   <strong>Nome:</strong> {usuario.nome} {usuario.sobrenome}
                 </p>
                 <p>
-                  <strong>Data de Nascimento:</strong> {usuario.dataNascimento}
+                  <strong>Data de Nascimento:</strong> {dataNasc}
                 </p>
                 <p>
                   <strong>Idade:</strong> {idade(usuario.dataNascimento)}
