@@ -19,7 +19,7 @@
 }
 
 .base {
-  width: 75%;
+  width: 65%;
   background-color: white;
   border-radius: 15px;
   box-shadow: 2px 2px 2px #00000010;
@@ -42,6 +42,10 @@
 
 .cxTexto {
   width: 50%;
+  text-align: center;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cxTexto p {

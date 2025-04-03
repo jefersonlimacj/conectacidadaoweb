@@ -113,8 +113,8 @@
 }
 
 .foto {
-  width: 150px;
   height: 150px;
+  aspect-ratio: 1;
   border-radius: 10%;
   background-color: #cccccc;
   border: 3px solid #fff;

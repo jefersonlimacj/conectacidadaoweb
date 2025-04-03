@@ -18,8 +18,8 @@ function TabelaUsuario({ _list }) {
     ? [...usuarios].sort((a, b) => {
         let inicio, fim;
         if (colunaOrdem === "bairro") {
-          inicio = a.endereco.bairro;
-          fim = b.endereco.bairro;
+          inicio = a.bairro;
+          fim = b.bairro;
         } else {
           inicio = a[colunaOrdem];
           fim = b[colunaOrdem];
@@ -70,7 +70,6 @@ function TabelaUsuario({ _list }) {
             </tr>
           </thead>
           <tbody>
-            {/* {msgRes} */}
             {ordemUsuarios.map((usuario) => {
               const idade = (dataNascimento) => {
                 const data = new Date();
@@ -87,7 +86,7 @@ function TabelaUsuario({ _list }) {
                       className={style.cxStatus}
                       style={{
                         backgroundColor:
-                          usuario.status === "ativo"
+                          usuario.statusUsuario === "ativo"
                             ? "greenyellow"
                             : "#FF0000",
                       }}
@@ -96,10 +95,10 @@ function TabelaUsuario({ _list }) {
                         className="material-symbols-rounded"
                         style={{
                           color:
-                            usuario.status === "ativo" ? "green" : "#330000",
+                            usuario.statusUsuario === "ativo" ? "green" : "#330000",
                         }}
                       >
-                        {usuario.status === "ativo" ? "lock_open" : "lock"}
+                        {usuario.statusUsuario === "ativo" ? "lock_open" : "lock"}
                       </span>
                     </div>
                   </td>
@@ -112,8 +111,8 @@ function TabelaUsuario({ _list }) {
                   </td>
                   <td>{usuario.nome}</td>
                   <td>{usuario.genero}</td>
-                  <td>{idade(usuario.data_nascimento)}</td>
-                  <td>{usuario.endereco.bairro}</td>
+                  <td>{idade(usuario.dataNascimento)}</td>
+                  <td>{usuario.bairro}</td>
                   <td
                     style={{
                       display: "flex",

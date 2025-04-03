@@ -5,6 +5,8 @@ import style from "../paginas/css/solicitacoes.module.css";
 import solicitacoes from "../jsons/solicitacoesEfeturadas.json";
 import ResSolicitacoesStatusV from "../componentes/cardsRelatorios/cardResSolicitacoesStatusV";
 import ResSolicitacoesStatus from "../componentes/cardsRelatorios/cardResSolicitacoesStatus";
+import { useState, useEffect } from "react";
+import api from "../../service/api";
 
 import {
   Chart as ChartJS,
@@ -28,6 +30,7 @@ ChartJS.register(
 );
 
 function Solicitacoes() {
+
   return (
     <>
       <TopMenu />
@@ -54,7 +57,7 @@ function Solicitacoes() {
             />
           </div>
           <p>Todas as solicitações:</p>
-          <CardTabela _listaSolicitacoes={solicitacoes} />
+          <CardTabela _listaSolicitacoes={solicitacoes}/>
         </div>
       </div>
     </>

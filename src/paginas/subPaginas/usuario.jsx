@@ -6,17 +6,54 @@ import CardTabela from "../../componentes/cardsRelatorios/cardTabela";
 import style from "../css/usuario.module.css";
 import solicitacoesEfetuadas from "../../jsons/solicitacoesEfeturadas.json";
 import { useEffect, useState } from "react";
+import api from "../../../service/api.jsx";
 
 function Usuario() {
   const navigate = useNavigate();
 
   const { u_id } = useParams();
-  const usuario = usuarios[u_id];
+  const [usuario, setUsuario] = useState(usuarios[0]);
+  const [dataNasc, setDataNasc] = useState();
   const fotoUsuario = usuario.foto;
 
-  const [statusUsuario, setStatusUsuario] = useState(
-    usuario.status === "ativo" ? true : false
-  );
+  useEffect(() => {
+    const pegarUsuario = async () => {
+      try {
+        const dadosUsuario = await api.get(`/cadastro/usuarios/${u_id}`);
+        setUsuario(dadosUsuario.data.result[0]); // Atualiza o estado do Usuário com os dados recebidos
+        setStatusUsuario(dadosUsuario.data.result[0].statusUsuario);
+        const dataISO = dadosUsuario.data.result[0].dataNascimento; //Pega a data em formato YYYY-MM-DDTHH:mm:ss.sssZ
+        setDataNasc(dataISO.split("T")[0]); //Transforma a data em yyyy-MM-DD
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+
+    if (u_id) {
+      pegarUsuario(); // Apenas chama a função se u_id existir
+    }
+  }, [u_id]);
+
+  const alterarStatus = async () => {
+    try {
+
+      const atualizacaoStatus = statusUsuario === "ativo" ? "inativo" : "ativo";
+
+      const response = await api.patch(`/cadastro/usuarios/${u_id}`, {
+        statusUsuario: atualizacaoStatus,
+      });
+
+      if (response.status === 200){        
+      setStatusUsuario(atualizacaoStatus);
+      }
+
+      console.log(statusUsuario);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [statusUsuario, setStatusUsuario] = useState();
 
   const idade = (dataNascimento) => {
     const data = new Date();
@@ -26,7 +63,7 @@ function Usuario() {
   };
 
   const solicitacoes = solicitacoesEfetuadas.filter(
-    (solicitacao) => solicitacao.usuario_id === usuario.id
+    (solicitacao) => solicitacao.usuario_id === usuario.id - 1 // <<<--- CORRIGIR ISSO DEPOIS
   );
 
   const totalSolicitacoes = solicitacoes.length;
@@ -90,19 +127,18 @@ function Usuario() {
               <div
                 className={style.btnBloquear}
                 style={{
-                  backgroundColor: statusUsuario === true ? "#950505" : "green",
+                  backgroundColor:
+                    statusUsuario === "ativo" ? "#950505" : "green",
                 }}
                 title={
                   statusUsuario === true
                     ? "Bloquear Usuário"
                     : "Desbloquear Usuário"
                 }
-                onClick={() => {
-                  setStatusUsuario(statusUsuario === true ? false : true);
-                }}
+                onClick={alterarStatus}
               >
                 <span className="material-symbols-rounded">
-                  {statusUsuario === true ? "lock" : "lock_open"}
+                  {statusUsuario === "ativo" ? "lock" : "lock_open"}
                 </span>
               </div>
             </div>
@@ -114,7 +150,7 @@ function Usuario() {
               ></div>
               <div className={style.info}>
                 <p>
-                  <strong>Nome:</strong> {usuario.nome}
+                  <strong>Nome:</strong> {usuario.nome} {usuario.sobrenome}
                 </p>
                 <p>
                   <strong>Data de Nascimento:</strong> {usuario.dataNascimento}
@@ -126,9 +162,9 @@ function Usuario() {
                   <strong>Sexo:</strong> {usuario.genero}
                 </p>
                 <p>
-                  <strong>Bairro:</strong> {usuario.endereco.rua},
-                  {usuario.endereco.numero}, {usuario.endereco.cidade} -
-                  {usuario.endereco.estado} CEP:{usuario.endereco.cep}
+                  <strong>Bairro:</strong> {usuario.rua},{usuario.numero},{" "}
+                  {usuario.complemento}, {usuario.cidade} -{usuario.estado} CEP:
+                  {usuario.cep}
                 </p>
                 <p>
                   <strong>Telefone:</strong> {usuario.telefone}
@@ -179,24 +215,29 @@ function Usuario() {
               className={style.statusUsuarioRibbon}
               style={{
                 backgroundColor:
-                  statusUsuario === true ? "greenyellow" : "#550000",
+                  statusUsuario === "ativo" ? "greenyellow" : "#550000",
               }}
             >
               <h2
                 style={{
-                  color: statusUsuario === true ? "green" : "#ff5252",
+                  color: statusUsuario === "ativo" ? "green" : "#ff5252",
                   transition: "all 0.5s",
                 }}
               >
-                {statusUsuario === true ? "Ativo" : "Bloqueado"}
+                {statusUsuario === "ativo" ? "Ativo" : "Inativo"}
               </h2>
             </div>
           </div>
           <p>
             {`Todas as Solicitações de: `}
-            <strong style={{ fontSize: "larger" }}>{usuario.nome}</strong>
+            <strong style={{ fontSize: "larger" }}>
+              {usuario.nome} {usuario.sobrenome}
+            </strong>
           </p>
-          <CardTabela _listaSolicitacoes={solicitacoes} />
+          <CardTabela
+            _listaSolicitacoes={solicitacoes}
+            _listaUsuarios={usuario}
+          />
         </div>
       </div>
     </>

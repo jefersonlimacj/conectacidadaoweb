@@ -4,7 +4,7 @@ import { Bar } from "react-chartjs-2";
 function BairroUsuario({ _list }) {
   const usuarios = _list;
 
-  const bairros = usuarios.map((user) => user.endereco.bairro);
+  const bairros = usuarios.map((user) => user.bairro);
 
   const contagem = bairros.reduce((acc, bairro) => {
     let itemContado = acc.find((item) => item.bairro === bairro);
@@ -17,9 +17,6 @@ function BairroUsuario({ _list }) {
 
     return acc;
   }, []);
-
-  contagem.push({ bairro: "Ribeira", quantidade: 6 });
-  contagem.push({ bairro: "Amaralina", quantidade: 8 });
   
   return (
     <>

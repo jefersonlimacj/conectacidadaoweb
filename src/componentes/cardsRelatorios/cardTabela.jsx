@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usuarios from "../../jsons/usuarios.json";
 import categoria from "../../jsons/categorias.json";
 import subCategoria from "../../jsons/subcategoria.json";
 import style from "../../componentes/cardsRelatorios/css/cardTabela.module.css";
+import { useState, useEffect } from "react";
+import api from "../../../service/api";
 
-// 🔹 Função para formatar data ISO para "dd/mm/yyyy"
+// Função para formatar data ISO para "dd/mm/yyyy"
 const formatarData = (dataIso) => {
   const data = new Date(dataIso);
   return `${String(data.getDate()).padStart(2, "0")}/${String(
@@ -13,7 +13,7 @@ const formatarData = (dataIso) => {
   ).padStart(2, "0")}/${data.getFullYear()}`;
 };
 
-// 🔹 Mapeamento de ícones e cores por status
+// Mapeamento de ícones e cores por status
 const statusIcones = {
   "Pedido Negado": ["block", "#CC3A3A"],
   "Processando Envio": ["help", "#E8A25C"],
@@ -24,7 +24,7 @@ const statusIcones = {
 
 const iconStatus = (status) => statusIcones[status] || ["help", "#000000"];
 
-function CardTabela({ _listaSolicitacoes }) {
+function CardTabela({ _listaSolicitacoes, _listaUsuario }) {
   if (!_listaSolicitacoes) {
     return (
       <>
@@ -45,6 +45,21 @@ function CardTabela({ _listaSolicitacoes }) {
 
   const [ordem, setOrdem] = useState(1);
   const [colunaOrdem, setColunaOrdem] = useState(null);
+
+  const [usuarios, setUsuarios] = useState({});
+
+  useEffect(() => {
+    const pegarUsuario = async () => {
+      try {
+        const dadosUsuario = await api.get(`/cadastro/usuarios`);
+        setUsuarios(dadosUsuario.data.result); // Atualiza o estado do Usuário com os dados recebidos
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+
+    pegarUsuario();
+  }, []);
 
   const solicitacoes = _listaSolicitacoes;
   //usar essa const para filtrar depois, apenas as "Processando Envio"
@@ -132,7 +147,8 @@ function CardTabela({ _listaSolicitacoes }) {
                   </div>
                 </td>
                 <td>
-                  {usuarios[solicitacao.usuario_id]?.nome || "Desconhecido"}
+                  {`${usuarios[solicitacao.usuario_id]?.nome || "Buscando..."} ${usuarios[solicitacao.usuario_id]?.sobrenome || ""}`}
+                 
                 </td>
                 <td>
                   {categoria[solicitacao.categoria_id]?.nome || "Não Informado"}
@@ -145,7 +161,7 @@ function CardTabela({ _listaSolicitacoes }) {
                   <img
                     src={urlImage}
                     alt={`Foto de ${
-                      usuarios[solicitacao.usuario_id]?.nome || "Desconhecido"
+                     usuarios[solicitacao.usuario_id]?.nome || "Desconhecido"
                     }`}
                   />
                 </td>

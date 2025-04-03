@@ -7,12 +7,32 @@ import CardTabela from "../componentes/cardsRelatorios/cardTabela";
 import CardEnquete from "../componentes/cardsRelatorios/cardEnquetes";
 import CardTabelaRes from "../componentes/cardsRelatorios/cardTabelaRes";
 import HeaderFilters from "../componentes/headerFilters";
-import solicitacoes from "../jsons/solicitacoesEfeturadas.json"
+import solicitacoes from "../jsons/solicitacoesEfeturadas.json";
+import { useState, useEffect } from "react";
+import api from "../../service/api";
 
 function Dashboard() {
 
-  const processando = solicitacoes.filter((item) => item.status === "Processando Envio")
-  
+
+  const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() => {
+    const pegarUsuario = async () => {
+      try {
+        const dadosUsuario = await api.get(`/cadastro/usuarios`);
+        setUsuarios(dadosUsuario.data.result); // Atualiza o estado do Usuário com os dados recebidos
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+
+    pegarUsuario();
+  }, []);
+
+  const processando = solicitacoes.filter(
+    (item) => item.status === "Processando Envio"
+  );
+
   return (
     <>
       <TopMenu />
@@ -32,7 +52,7 @@ function Dashboard() {
             </div>
           </div>
           <p>Solicitações não Finalizadas</p>
-          <CardTabela _listaSolicitacoes={processando}/>
+          <CardTabela _listaSolicitacoes={processando} _listaUsuarios={usuarios} />
         </div>
       </div>
     </>

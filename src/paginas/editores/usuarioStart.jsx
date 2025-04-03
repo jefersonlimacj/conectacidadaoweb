@@ -1,10 +1,13 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import NavMenu from "../../componentes/nav-menu";
 import TopMenu from "../../componentes/top-menu";
 import style from "../../paginas/css/usuarioedit.module.css";
 import api from "../../../service/api.jsx";
 
 function CriarUsuario() {
+
+  const navigate = useNavigate();
   const [verSenha, setVerSenha] = useState(false);
   const [verSenhaR, setVerSenhaR] = useState(false);
 
@@ -133,6 +136,7 @@ function CriarUsuario() {
         cep,
       });
       alert(response.data.mensagem);
+      navigate("/cadastros/usuarioslista")
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
       alert("Erro ao cadastrar usuário. Tente novamente.");

@@ -4,9 +4,27 @@ import style from "../../paginas/css/usuariosLista.module.css";
 import CardTabelaUsuarios from "../../componentes/cardsRelatorios/cardTabelaUsuarios";
 import usuarios from "../../jsons/usuarios.json";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import api from "../../../service/api";
 
 function UsuariosLista() {
   const navigate = useNavigate();
+  
+    const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() => {
+    const pegarUsuario = async () => {
+      try {
+        const dadosUsuario = await api.get(`/cadastro/usuarios`);
+        setUsuarios(dadosUsuario.data.result); // Atualiza o estado do Usuário com os dados recebidos
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+
+    pegarUsuario();
+  }, []);
+  
 
   return (
     <>
@@ -36,7 +54,7 @@ function UsuariosLista() {
               </button>
             </div>
           </div>
-          <CardTabelaUsuarios _list={usuarios} />
+          <CardTabelaUsuarios _list={usuarios}/>
         </div>
       </div>
     </>

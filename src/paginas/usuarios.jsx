@@ -6,11 +6,29 @@ import TabelaUsuario from "../componentes/cardsRelatorios/cardTabelaUsuarios";
 import BairroUsuario from "../componentes/cardsRelatorios/cardBairroUsuario";
 import GeneroUsuario from "../componentes/cardsRelatorios/cardGerenoUsuario";
 import IdadeUsuario from "../componentes/cardsRelatorios/cardIdadeUsuario";
+import api from "../../service/api";
+import { useState, useEffect } from "react";
 
 function Usuarios() {
-  const userAtivos = usuarios.filter((usuario) => usuario.status === "ativo");
+  const [usuarios, setUsuarios] = useState([]);
+  const [dataNasc, setDataNasc] = useState();
+
+  useEffect(() => {
+    const pegarUsuario = async () => {
+      try {
+        const dadosUsuario = await api.get(`/cadastro/usuarios`);
+        setUsuarios(dadosUsuario.data.result); // Atualiza o estado do Usuário com os dados recebidos
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+
+    pegarUsuario();
+  }, []);
+  
+  const userAtivos = usuarios.filter((usuario) => usuario.statusUsuario === "ativo");
   const userInativos = usuarios.filter(
-    (usuario) => usuario.status === "bloqueado"
+    (usuario) => usuario.statusUsuario === "inativo"
   );
 
   return (
