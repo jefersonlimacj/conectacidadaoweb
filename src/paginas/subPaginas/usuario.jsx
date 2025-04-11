@@ -12,14 +12,21 @@ function Usuario() {
 
   const { u_id } = useParams();
 
-  const {usuario, statusUsuario, setStatusUsuario, dataNasc, loading, erro, alterarStatus} = useUsuario(u_id)
+  const {
+    usuario,
+    statusUsuario,
+    setStatusUsuario,
+    dataNasc,
+    loading,
+    erro,
+    alterarStatus,
+  } = useUsuario(u_id);
 
   if (loading) return <p>Carregando...</p>;
   if (erro) return <p>Erro ao carregar usuário</p>;
 
   const fotoUsuario = usuario.foto;
 
-  
   const idade = (dataNascimento) => {
     const data = new Date();
     const dataNasc = new Date(dataNascimento);
@@ -105,6 +112,14 @@ function Usuario() {
                 <span className="material-symbols-rounded">
                   {statusUsuario === "ativo" ? "lock" : "lock_open"}
                 </span>
+              </div>
+              <div
+                style={{ cursor: "pointer" }}
+                className={style.btnCompartilhar}
+                title="Sair"
+                onClick={() => navigate(`/cadastros/usuarioslista`)}
+              >
+                <span className="material-symbols-rounded"> exit_to_app </span>
               </div>
             </div>
             <div></div>

@@ -2,46 +2,56 @@ import TopMenu from "../../componentes/top-menu";
 import NavMenu from "../../componentes/nav-menu";
 import style from "../css/servico.module.css";
 import { useParams, useNavigate } from "react-router-dom";
-import categorias from "../../jsons/categorias.json";
+// import categorias from "../../jsons/categorias.json";
 import solicitacoes from "../../jsons/solicitacoesEfeturadas.json";
 import CXStatus from "../../componentes/cardsRelatorios/cardCXStatus";
-import Subcategorias from "../../jsons/subcategoria.json";
-import { useState } from "react";
+// import Subcategorias from "../../jsons/subcategoria.json";
+import { useState, useEffect } from "react";
 import CardTabela from "../../componentes/cardsRelatorios/cardTabela";
+import api from "../../../service/api";
 
 function Servico() {
   const { ct_id } = useParams();
   const navigate = useNavigate();
 
-  const detalhesCategoria = categorias[ct_id];
-
+  
   const [lista, setLista] = useState([]);
+  
+  const [categoria, setCategoria] = useState([]);
+  
+  const [Subcategorias, setSubcategorias] = useState([]);
+
+  const [detalhesCategoria, setDetalhesCategoria] = useState(ct_id);
+
+  useEffect(() => {
+    const carregarCategoria = async () => {
+      try {
+        const respostaCategoria = await api.get(`/servico/categorias/${ct_id}`);
+        const respostaSubCategoria = await api.get(`/servico/subcategorias`);
+        let dados = respostaCategoria.data.result[0];
+        let listaSub = respostaSubCategoria.data.result;
+        let filtroListaSub = listaSub.filter((item) => item.categoria_id === dados.id)
+        setCategoria(dados);
+        setSubcategorias(filtroListaSub);
+        setDetalhesCategoria(dados)
+
+        console.log(dados, filtroListaSub)
+      } catch (err) {
+        throw err;
+      }
+    };
+    carregarCategoria();
+  }, [ct_id]);
 
   const solCategorias = solicitacoes.filter((sol) => {
-    return sol.categoria_id === detalhesCategoria.categoria_id;
+    return sol.categoria_id === categoria.id;
   });
 
   const solCatSubN = solCategorias.map((item) => {
     return { subcategoria_id: item.subcategoria_id, id: item.id };
   });
 
-  const resSubCategoria = solCatSubN.reduce((acc, item) => {
-    let itemFiltrado = acc.find(
-      (itemB) => itemB.subcategoria_id === item.subcategoria_id
-    );
-
-    if (itemFiltrado) {
-      itemFiltrado.quantidade += 1;
-    } else {
-      acc.push({
-        subcategoria_id: item.subcategoria_id,
-        nome: Subcategorias[item.subcategoria_id].nome,
-        quantidade: 1,
-      });
-    }
-
-    return acc;
-  }, []);
+  const resSubCategoria = Subcategorias.filter((item) => item.categoria_id === categoria.id)
 
   const determinarLista = (subCatId) => {
     const lista = solCategorias.filter(
@@ -91,7 +101,9 @@ function Servico() {
                   className={style.btnAct}
                   title="Editar Categoria"
                   onClick={() =>
-                    navigate(`/editarcategoria/${detalhesCategoria.categoria_id}`)
+                    navigate(
+                      `/editarcategoria/${detalhesCategoria.categoria_id}`
+                    )
                   }
                 >
                   <span className="material-symbols-rounded"> edit </span>
@@ -106,24 +118,31 @@ function Servico() {
                 </div>
               </div>
             </div>
-            <div className={style.linhaStatus} >
+            <div className={style.linhaStatus}>
               <div className={style.cxDialogo}>
                 <p>Todos os dados referêntes a:</p>
                 <div
                   className={style.iconeCategoriaP}
                   style={{
-                    backgroundColor: detalhesCategoria.cor,
-                    boxShadow: `1px 1px 8px ${detalhesCategoria.cor + "88"}`,
+                    backgroundColor: detalhesCategoria.corPrimaria,
+                    boxShadow: `1px 1px 8px ${
+                      detalhesCategoria.corPrimaria + "88"
+                    }`,
                   }}
                 >
                   <span
                     className="material-symbols-rounded"
-                    style={{ color: "white" }}
+                    style={{ color: detalhesCategoria.corSecundaria }}
                   >
                     {detalhesCategoria.icone}
                   </span>
                 </div>
-                <h2 style={{ color: detalhesCategoria.cor, textAlign: "center" }}>
+                <h2
+                  style={{
+                    color: detalhesCategoria.corPrimaria,
+                    textAlign: "center",
+                  }}
+                >
                   {detalhesCategoria.nome}
                 </h2>
               </div>
@@ -165,11 +184,11 @@ function Servico() {
                 {resSubCategoria.map((item) => {
                   return (
                     <tr
-                      key={item.subcategoria_id}
-                      onClick={() => determinarLista(item.subcategoria_id)}
+                      key={item.id}
+                      onClick={() => determinarLista(item.id)}
                     >
-                      <td>
-                        <strong>{item.subcategoria_id}</strong>
+                      <td style={{paddingLeft:"15px"}}>
+                        <strong>{item.id}</strong>
                       </td>
                       <td>{item.nome}</td>
                       <td>{item.quantidade}</td>

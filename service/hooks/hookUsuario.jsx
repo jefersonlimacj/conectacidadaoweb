@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api.jsx"
 
-const useUsuario = (u_id) => {
+export const useUsuario = (u_id) => {
     const [usuario, setUsuario] = useState(null);
     const [statusUsuario, setStatusUsuario] = useState(null);
     const [dataNasc, setDataNasc] = useState(null);

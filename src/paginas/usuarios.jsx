@@ -1,7 +1,6 @@
 import NavMenu from "../componentes/nav-menu";
 import TopMenu from "../componentes/top-menu";
 import style from "./css/usuarios.module.css";
-import usuarios from "../jsons/usuarios.json";
 import TabelaUsuario from "../componentes/cardsRelatorios/cardTabelaUsuarios";
 import BairroUsuario from "../componentes/cardsRelatorios/cardBairroUsuario";
 import GeneroUsuario from "../componentes/cardsRelatorios/cardGerenoUsuario";

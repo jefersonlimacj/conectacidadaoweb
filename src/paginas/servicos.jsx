@@ -1,15 +1,55 @@
 import style from "../paginas/css/servicos.module.css";
 import TopMenu from "../componentes/top-menu";
 import NavMenu from "../componentes/nav-menu";
-import categorias from "../jsons/categorias.json";
-import subcategorias from "../jsons/subcategoria.json";
+// import categorias from "../jsons/categorias.json";
+// import subcategorias from "../jsons/subcategoria.json";
 import status from "../jsons/status.json";
 import solicitacoes from "../jsons/solicitacoesEfeturadas.json";
 import { useNavigate } from "react-router-dom";
 import { Bar } from "react-chartjs-2";
+import api from "../../service/api";
+import { useEffect, useState } from "react";
 
 function Servicos() {
   const navigate = useNavigate();
+
+  const [categorias, setCategorias] = useState([]);
+  const [subcategorias, setSubcategorias] = useState([]);
+
+  const editarStatusCat = async (ct_id, statusAtual) => {
+    const novoStatus = statusAtual === "ativo" ? "inativo" : "ativo";
+    try {
+      await api.patch(`/servico/categorias/status/${ct_id}`, {
+        statusCat: novoStatus,
+      });
+
+      // Atualiza a lista renderizada na tela após a alteração
+      setCategorias((prev) =>
+        prev.map((item) =>
+          item.id === ct_id ? { ...item, statusCat: novoStatus } : item
+        )
+      );
+
+      // alert(`Status alterado para: ${novoStatus}`);
+    } catch (err) {
+      console.error("Erro ao alterar status:", err);
+    }
+  };
+
+  useEffect(() => {
+    const carregarCategorias = async () => {
+      try {
+        const pegarCat = await api.get("/servico/categorias");
+        const pegarSubCat = await api.get("/servico/subcategorias");
+        setCategorias(pegarCat.data.result);
+        setSubcategorias(pegarSubCat.data.result);
+      } catch (err) {
+        throw err;
+      }
+    };
+    carregarCategorias();
+  }, []);
+
   return (
     <>
       <TopMenu />
@@ -44,12 +84,11 @@ function Servicos() {
               <tbody>
                 {categorias.map((categoria) => {
                   const subCat = subcategorias.filter(
-                    (subcategoria) =>
-                      subcategoria.categoria_id == categoria.categoria_id
+                    (item) => item.categoria_id == categoria.id
                   );
 
                   const solCat = solicitacoes.filter(
-                    (item) => item.categoria_id === categoria.categoria_id
+                    (item) => item.id === categoria.id
                   );
 
                   const statusPN = solCat.filter(
@@ -68,15 +107,30 @@ function Servicos() {
                     (item) => item.status === "Solicitação Atendida"
                   );
                   return (
-                    <tr key={categoria.categoria_id}>
+                    <tr
+                      key={categoria.id}
+                      style={{
+                        opacity: categoria.statusCat === "ativo" ? 1 : 0.4,
+                      }}
+                    >
                       <td>
                         <div
                           className={style.iconeCategoria}
-                          style={{ backgroundColor: categoria.cor }}
+                          style={{
+                            backgroundColor:
+                              categoria.statusCat === "ativo"
+                                ? categoria.corPrimaria
+                                : "grey",
+                          }}
                         >
                           <span
                             className="material-symbols-rounded"
-                            style={{ color: categoria.corFont }}
+                            style={{
+                              color:
+                                categoria.statusCat === "ativo"
+                                  ? categoria.corSecundaria
+                                  : "black",
+                            }}
                           >
                             {categoria.icone}
                           </span>
@@ -88,14 +142,10 @@ function Servicos() {
                       <td>
                         <div className={style.listaSubCategorias}>
                           {subCat.slice(-3).map((item) => {
-                            return (
-                              <p key={item.subcategoria_id}>{item.nome}</p>
-                            );
+                            return <p key={item.id}>{item.nome}</p>;
                           })}
                           <a
-                            onClick={() =>
-                              navigate(`/servico/${categoria.categoria_id}`)
-                            }
+                            onClick={() => navigate(`/servico/${categoria.id}`)}
                           >
                             Ver mais...
                           </a>
@@ -145,15 +195,28 @@ function Servicos() {
                         <div className={style.actCat}>
                           <span
                             className={`material-symbols-rounded ${style.actBatBtn}`}
-                            onClick={() =>
-                              navigate(
-                                `/editarcategoria/${categoria.categoria_id}`
-                              )
+                            onClick={
+                              categoria.statusCat === "ativo"
+                                ? () =>
+                                    navigate(`/editarcategoria/${categoria.id}`)
+                                : () => {}
                             }
                           >
                             edit
                           </span>
                           <span
+                            style={{
+                              backgroundColor:
+                                categoria.statusCat === "ativo"
+                                  ? "white"
+                                  : "red",
+                            }}
+                            onClick={() => {
+                              editarStatusCat(
+                                categoria.id,
+                                categoria.statusCat
+                              );
+                            }}
                             className={`material-symbols-rounded ${style.actBatBtn}`}
                           >
                             block

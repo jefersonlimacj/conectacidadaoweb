@@ -7,6 +7,8 @@ import usuarios from "../../jsons/usuarios.json";
 import categorias from "../../jsons/categorias.json";
 import subcategorias from "../../jsons/subcategoria.json";
 import style from "../css/registro.module.css";
+import useUsuario from "../../../service/hooks/hookUsuario";
+import api from "../../../service/api";
 
 const statusIcones = {
   "Pedido Negado": ["Pedido Negado", "block", "#CC3A3A", "#CC3A3A30"],
@@ -54,13 +56,46 @@ const setor = [
 ];
 
 function Registro() {
-  const { p_id } = useParams();
-
   const navigate = useNavigate();
 
-  const solicitacao = solicitacoes[p_id];
-  const atualizacoes = solicitacoes[p_id].att;
+  const { p_id } = useParams();
 
+  const solicitacao = solicitacoes[p_id];
+
+  const [usuario, setUsuario] = useState();
+
+  useEffect(() => {
+    const pegarUsuario = async () => {
+      try {
+        const response = await api.get(
+          `/cadastro/usuarios/${solicitacao.usuario_id + 1 }` //REMOVER + 1
+        );
+        const dados = response.data.result[0];
+
+        setUsuario(dados);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    pegarUsuario();
+  }, []);
+
+  console.log(solicitacao, usuario);
+
+  const atualizacoesS = {
+    versaoAtt: 1,
+    dataAtt: "2024-03-12T08:00:00Z",
+    statusAtt: "Processando Envio",
+    setorResp1: "SEINFRA",
+    setorResp2: "SEMOB",
+    nomeGestor: "João Silva",
+    justificativa: "",
+    dataAgendamento: "",
+    fotos: false,
+  };
+
+  const atualizacoes = Object.entries(atualizacoesS);
   const [status, setStatus] = useState(solicitacao.status);
 
   const [img1, setImg1] = useState("");
@@ -164,7 +199,7 @@ function Registro() {
             className={style.base}
             style={{
               background: `linear-gradient(135deg, ${
-                categorias[solicitacao.categoria_id]?.cor + "50"
+                categorias[solicitacao.categoria_id]?.corPrimaria  + "50"
               }, #ffffff, #ffffff )`,
             }}
           >
@@ -174,14 +209,14 @@ function Registro() {
                   className={style.iconCategoria}
                   style={{
                     backgroundColor:
-                      categorias[solicitacao.categoria_id]?.cor || "#000000",
+                      categorias[solicitacao.categoria_id]?.corPrimaria || "#000000",
                   }}
                 >
                   <span
                     className="material-symbols-rounded"
                     style={{
                       color:
-                        categorias[solicitacao.categoria_id]?.corFont ||
+                        categorias[solicitacao.categoria_id]?.corSecundaria ||
                         "#FFFFFF",
                     }}
                   >
@@ -191,7 +226,7 @@ function Registro() {
                 <div className={style.dadosSolicitacao}>
                   <p
                     className={style.tituloSubCategoria}
-                    style={{ color: categorias[solicitacao.categoria_id]?.cor }}
+                    style={{ color: categorias[solicitacao.categoria_id]?.corPrimaria }}
                   >
                     {subcategorias[solicitacao.subcategoria_id]?.nome ||
                       "Sem informação"}
@@ -204,13 +239,12 @@ function Registro() {
                     <p>Solicitante:</p>
                     <a
                       onClick={() =>
-                        navigate(`/usuario/${solicitacao.usuario_id}`)
+                        navigate(`/usuario/${solicitacao.usuario_id + 1}`) //REMOVER + 1
                       }
                       style={{ cursor: "pointer" }}
                     >
                       <p style={{ fontWeight: "bold", margin: "0 10px" }}>
-                        {usuarios[solicitacao.usuario_id]?.nome ||
-                          "Desconhecido"}
+                        {`${usuario?.nome || "Carregando..."} ${usuario?.sobrenome || ""}`}
                       </p>
                     </a>
                   </div>
@@ -442,46 +476,16 @@ function Registro() {
                 </tr>
               </thead>
               <tbody>
-                {atualizacoes < 1 ? (
-                  <tr>
-                    <td style={{ textAlign: "center" }}>Sem Atualizações</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                    <td style={{ textAlign: "center" }}>-</td>
-                  </tr>
-                ) : (
-                  atualizacoes.map((att) => {
-                    const data = (dataIso) => {
-                      if (dataIso == "") {
-                        return "-";
-                      }
-                      const data = new Date(dataIso);
-                      return `${String(data.getDate()).padStart(
-                        2,
-                        "0"
-                      )}/${String(data.getMonth() + 1).padStart(
-                        2,
-                        "0"
-                      )}/${data.getFullYear()}`;
-                    };
-                    return (
-                      <tr key={att.versaoAtt}>
-                        <td>Nº: {att.versaoAtt}</td>
-                        <td>{data(att.dataAtt)}</td>
-                        <td>{att.statusAtt}</td>
-                        <td>{data(att.dataAgendamento)}</td>
-                        <td>{att.setorResp1}</td>
-                        <td>{att.setorResp2}</td>
-                        <td>{att.justificativa}</td>
-                        <td>{att.nomeGestor}</td>
-                      </tr>
-                    );
-                  })
-                )}
+                <tr>
+                  <td style={{ textAlign: "center" }}>Sem Atualizações</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                  <td style={{ textAlign: "center" }}>-</td>
+                </tr>
               </tbody>
             </table>
           </div>

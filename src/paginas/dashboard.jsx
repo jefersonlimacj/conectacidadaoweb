@@ -12,20 +12,23 @@ import { useState, useEffect } from "react";
 import api from "../../service/api";
 
 function Dashboard() {
-
-
   const [usuarios, setUsuarios] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [subcategorias, setSubcategorias] = useState([]);
 
   useEffect(() => {
     const pegarUsuario = async () => {
       try {
         const dadosUsuario = await api.get(`/cadastro/usuarios`);
-        setUsuarios(dadosUsuario.data.result); // Atualiza o estado do Usuário com os dados recebidos
+        const dadosCategoria = await api.get(`/servico/categorias`);
+        const dadosSubcategoria = await api.get(`/servico/subcategorias`);
+        setUsuarios(dadosUsuario.data.result);
+        setCategorias(dadosCategoria.data.result);
+        setSubcategorias(dadosSubcategoria.data.result);
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
       }
     };
-
     pegarUsuario();
   }, []);
 
@@ -52,7 +55,12 @@ function Dashboard() {
             </div>
           </div>
           <p>Solicitações não Finalizadas</p>
-          <CardTabela _listaSolicitacoes={processando} _listaUsuarios={usuarios} />
+          <CardTabela
+            _listaSolicitacoes={processando}
+            _listaUsuarios={usuarios}
+            _listaCategorias={categorias}
+            _listaSubcategorias={subcategorias}
+          />
         </div>
       </div>
     </>

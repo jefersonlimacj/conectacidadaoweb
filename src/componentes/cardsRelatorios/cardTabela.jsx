@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import categoria from "../../jsons/categorias.json";
-import subCategoria from "../../jsons/subcategoria.json";
+// import categoria from "../../jsons/categorias.json";
+// import subCategoria from "../../jsons/subcategoria.json";
 import style from "../../componentes/cardsRelatorios/css/cardTabela.module.css";
 import { useState, useEffect } from "react";
 import api from "../../../service/api";
@@ -24,7 +24,9 @@ const statusIcones = {
 
 const iconStatus = (status) => statusIcones[status] || ["help", "#000000"];
 
-function CardTabela({ _listaSolicitacoes, _listaUsuario }) {
+function CardTabela({
+  _listaSolicitacoes,
+}) {
   if (!_listaSolicitacoes) {
     return (
       <>
@@ -47,22 +49,29 @@ function CardTabela({ _listaSolicitacoes, _listaUsuario }) {
   const [colunaOrdem, setColunaOrdem] = useState(null);
 
   const [usuarios, setUsuarios] = useState({});
+  const [categoria, setCategoria] = useState([]);
+  const [subcategoria, setSubcategoria] = useState([]);
 
   useEffect(() => {
     const pegarUsuario = async () => {
       try {
         const dadosUsuario = await api.get(`/cadastro/usuarios`);
-        setUsuarios(dadosUsuario.data.result); // Atualiza o estado do Usuário com os dados recebidos
+        const dadosCategoria = await api.get(`/servico/categorias`);
+        const dadosSubcategoria = await api.get(`/servico/subcategorias`);
+        setUsuarios(dadosUsuario.data.result);
+        setCategoria(dadosCategoria.data.result);
+        setSubcategoria(dadosSubcategoria.data.result);
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
       }
     };
-
     pegarUsuario();
   }, []);
 
   const solicitacoes = _listaSolicitacoes;
   //usar essa const para filtrar depois, apenas as "Processando Envio"
+
+  console.log(solicitacoes)
 
   const mudarOrdem = (coluna) => {
     setOrdem(coluna === colunaOrdem ? -ordem : 1);
@@ -124,6 +133,8 @@ function CardTabela({ _listaSolicitacoes, _listaUsuario }) {
             const urlImage = `https://picsum.photos/seed/${solicitacao.id}-1/200`;
             const statusInfo = iconStatus(solicitacao.status);
 
+            console.log(solicitacao)
+
             return (
               <tr
                 key={solicitacao.protocolo}
@@ -133,35 +144,38 @@ function CardTabela({ _listaSolicitacoes, _listaUsuario }) {
                   <div
                     className={style.iconCategoria}
                     style={{
-                      backgroundColor: categoria[solicitacao.categoria_id]?.cor,
+                      backgroundColor:
+                        categoria[solicitacao.categoria_id - 1]?.corPrimaria,
                     }}
                   >
                     <span
                       className="material-symbols-rounded"
                       style={{
-                        color: categoria[solicitacao.categoria_id]?.corFont,
+                        color:
+                          categoria[solicitacao.categoria_id - 1]?.corSecundaria,
                       }}
                     >
-                      {categoria[solicitacao.categoria_id]?.icone}
+                      {categoria[solicitacao.categoria_id - 1]?.icone}
                     </span>
                   </div>
                 </td>
                 <td>
-                  {`${usuarios[solicitacao.usuario_id]?.nome || "Buscando..."} ${usuarios[solicitacao.usuario_id]?.sobrenome || ""}`}
-                 
+                  {`${
+                    usuarios[solicitacao.usuario_id - 1]?.nome || "Buscando..."
+                  } ${usuarios[solicitacao.usuario_id - 1]?.sobrenome || ""}`}
                 </td>
                 <td>
-                  {categoria[solicitacao.categoria_id]?.nome || "Não Informado"}
+                  {categoria[solicitacao.categoria_id - 1]?.nome || "Não Informado"}
                 </td>
                 <td>
-                  {subCategoria[solicitacao.subcategoria_id]?.nome ||
+                  {subcategoria[solicitacao.subcategoria_id - 1]?.nome ||
                     "Não Informado"}
                 </td>
                 <td>
                   <img
                     src={urlImage}
                     alt={`Foto de ${
-                     usuarios[solicitacao.usuario_id]?.nome || "Desconhecido"
+                      usuarios[solicitacao.usuario_id - 1]?.nome || "Desconhecido"
                     }`}
                   />
                 </td>

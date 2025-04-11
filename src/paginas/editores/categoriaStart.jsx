@@ -4,47 +4,31 @@ import TopMenu from "../../componentes/top-menu";
 import { useNavigate } from "react-router-dom";
 import Categorias from "../../jsons/categorias.json";
 import Subcategorias from "../../jsons/subcategoria.json";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import api from "../../../service/api";
 
 function CategoriaStart() {
-
   const navigate = useNavigate();
-  const [cor, setCor] = useState("#555");
-  const [cor2, setCor2] = useState("#ddd");
+  const [corPrimaria, setCorPrimaria] = useState("#555");
+  const [corSecundaria, setCorSecundaria] = useState("#ddd");
   const [icone, setIcone] = useState("help");
   const [nome, setNome] = useState("Sua Categoria aqui");
 
-  const [nomeSubCat, setNomeSubCat] = useState("Sua Subcategoria aqui...");
-  const [subCategorias, setSubcategorias] = useState([]);
+  const adicionarCategoria = async (e) => {
+    e.preventDefault();
 
-  const novaCategoriaId = Categorias.length;
-
-  const adicionarCategoria = () => {
-    if (nome.trim() !== "") {
-      const novaCategoria = {
-        categoria_id: novaCategoriaId,
-        nome: nome,
-        cor: cor,
-        corFont: cor2,
-        icone: icone,
-      };
+    try {
+      const novaCategoria = await api.post("/servico/categorias", {
+        nome,
+        corPrimaria,
+        corSecundaria,
+        icone,
+      });
+      alert(novaCategoria.data.mensagem);
       console.log(novaCategoria);
-      navigate("/servicos")
-    }
-  };
-
-  const adicionarSubcategoria = () => {
-    if (nomeSubCat.trim() !== "") {
-      const novoItem = {
-        subcategoria_id: subCategorias.length,
-        nome: nomeSubCat,
-        categoria_id: novaCategoriaId,
-      };
-
-      console.log(novoItem);
-      subCategorias.push(novoItem);
-      setNomeSubCat("");
+      navigate("/servicos");
+    } catch (err) {
+      return err;
     }
   };
 
@@ -58,7 +42,7 @@ function CategoriaStart() {
             <div className={style.topoEdit}>
               <h2>Categoria</h2>
               <p>
-                Edite aqui suas configurações e adicione novas Subcategorias.
+                Insira a baixo as informações para criar uma nova Categoria.
               </p>
             </div>
             <div className={style.dividerH}></div>
@@ -77,18 +61,18 @@ function CategoriaStart() {
                   <p>Cor 1:</p>
                   <input
                     type="color"
-                    defaultValue={cor}
+                    defaultValue={corPrimaria}
                     className={style.inputColor}
-                    onChange={(e) => setCor(e.target.value)}
+                    onChange={(e) => setCorPrimaria(e.target.value)}
                   />
                 </div>
                 <div className={style.inputL2}>
                   <p>Cor 2:</p>
                   <input
                     type="color"
-                    defaultValue={cor2}
+                    defaultValue={corSecundaria}
                     className={style.inputColor}
-                    onChange={(e) => setCor2(e.target.value)}
+                    onChange={(e) => setCorSecundaria(e.target.value)}
                   />
                 </div>
                 <div
@@ -131,86 +115,21 @@ function CategoriaStart() {
                 <div
                   className={style.previaIcone}
                   style={{
-                    backgroundColor: cor,
-                    boxShadow: `3px 3px 10px ${cor + "50"}`,
+                    backgroundColor: corPrimaria,
+                    boxShadow: `3px 3px 10px ${corPrimaria + "50"}`,
                   }}
                 >
                   <span
                     className="material-symbols-rounded"
-                    style={{ color: cor2 }}
+                    style={{ color: corSecundaria }}
                   >
                     {icone}
                   </span>
                 </div>
-                <h1 style={{ color: cor }}>{nome}</h1>
+                <h1 style={{ color: corPrimaria }}>{nome}</h1>
               </div>
             </form>
-            <div className={style.dividerH}></div>
-            <p>
-              <strong>{`Subcategorias de ${nome}`}</strong>
-            </p>
-            <div className={style.cadastroNovaSubCat}>
-              <p style={{ width: "20%" }}>Cadastrar nova Subcategoria</p>
-              <div className={style.dividerH}></div>
-              <input
-                type="text"
-                name=""
-                id=""
-                placeholder={nomeSubCat}
-                onChange={(e) => setNomeSubCat(e.target.value)}
-              />
-              <button
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
-                onClick={() => adicionarSubcategoria()}
-              >
-                <span className="material-symbols-rounded">playlist_add</span>
-                Adicionar
-              </button>
-            </div>
-            <div className={style.dividerH}></div>
-            <table className={style.tabelaSubcategorias}>
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Nome</th>
-                  <th>Editar</th>
-                  <th>X</th>
-                </tr>
-              </thead>
-              <tbody>
-                {subCategorias.length === 0 ? (
-                  <tr>
-                    <td>Não há Subcategorias</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                  </tr>
-                ) : (
-                  subCategorias.map((subcategoria) => {
-                    return (
-                      <tr key={subcategoria.subcategoria_id}>
-                        <td>{subcategoria.subcategoria_id}</td>
-                        <td>{subcategoria.nome}</td>
-                        <td>
-                          <span className="material-symbols-rounded">edit</span>
-                        </td>
-                        <td>
-                          <span className="material-symbols-rounded">
-                            block
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
+           
             <div className={style.dividerH}></div>
             <div
               style={{
@@ -232,7 +151,7 @@ function CategoriaStart() {
                   justifyContent: "center",
                   gap: "10px",
                 }}
-                onClick={() => adicionarCategoria()}
+                onClick={(e) => adicionarCategoria(e)}
               >
                 <span
                   className="material-symbols-rounded"

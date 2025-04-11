@@ -109,7 +109,7 @@ function TabelaUsuario({ _list }) {
                       alt={`Foto do usuário: ${usuario.nome}`}
                     />
                   </td>
-                  <td>{usuario.nome}</td>
+                  <td>{`${usuario.nome} ${usuario.sobrenome}`}</td>
                   <td>{usuario.genero}</td>
                   <td>{idade(usuario.dataNascimento)}</td>
                   <td>{usuario.bairro}</td>

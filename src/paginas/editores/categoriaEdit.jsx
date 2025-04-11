@@ -1,37 +1,142 @@
 import style from "../css/categoriaEdit.module.css";
 import NavMenu from "../../componentes/nav-menu";
 import TopMenu from "../../componentes/top-menu";
-import { useParams } from "react-router-dom";
-import Categorias from "../../jsons/categorias.json";
-import Subcategorias from "../../jsons/subcategoria.json";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+// import Categorias from "../../jsons/categorias.json";
+// import Subcategorias from "../../jsons/subcategoria.json";
+import { useState, useEffect } from "react";
+import api from "../../../service/api";
 
 function CategoriaEdit() {
   const { ct_id } = useParams();
 
-  const categoria = Categorias.find((item) => item.categoria_id == ct_id);
+  const navigate = useNavigate();
 
-  const [subCategorias, setSubcategorias] = useState(
-    Subcategorias.filter((item) => item.categoria_id == ct_id)
-  );
+  const [categoria, setCategoria] = useState([]);
 
-  const [cor, setCor] = useState(categoria.cor);
-  const [cor2, setCor2] = useState(categoria.corFont);
+  const [subCategorias, setSubcategorias] = useState([]);
+
+  useEffect(() => {
+    const carregarCategoria = async () => {
+      try {
+        const respostaCategoria = await api.get(`/servico/categorias/${ct_id}`);
+        const respostaSubCategoria = await api.get(`/servico/subcategorias`);
+        let dados = respostaCategoria.data.result[0];
+        let listaSub = respostaSubCategoria.data.result;
+        setCategoria(dados);
+        setCorPrimaria(dados.corPrimaria);
+        setCorSecundaria(dados.corSecundaria);
+        setIcone(dados.icone);
+        setSubcategorias(listaSub);
+      } catch (err) {
+        throw err;
+      }
+    };
+    carregarCategoria();
+  }, []);
+
+  const [corPrimaria, setCorPrimaria] = useState(categoria.corPrimaria);
+  const [corSecundaria, setCorSecundaria] = useState(categoria.corSecundaria);
   const [icone, setIcone] = useState(categoria.icone);
   const [nome, setNome] = useState(categoria.nome);
 
   const [nomeSubCat, setNomeSubCat] = useState("");
+  const [statusSubCat, setStatusSubCat] = useState("");
 
-  const adicionarSubcategoria = () => {
-    if (nomeSubCat.trim() !== "") {
-      const novaSubCategoria = {
-        subcategoria_id: subCategorias.length,
+  const adicionarSubcategoria = async () => {
+    const categoria_id = ct_id;
+
+    if (nomeSubCat.trim() === "") return;
+
+    try {
+      const resposta = await api.post("/servico/subcategorias", {
         nome: nomeSubCat,
-        categoria: ct_id,
-      };
-      console.log(novaSubCategoria);
-      setSubcategorias([...subCategorias, novaSubCategoria]);
-      setNomeSubCat("");
+        categoria_id,
+      });
+
+      if (resposta.status === 201) {
+        // Opcionalmente, você pode retornar a subcategoria criada do backend com ID
+        const novaSub = {
+          subcategoria_id: resposta.data.id || Date.now(), // fallback
+          nome: nomeSubCat,
+          categoria_id,
+        };
+
+        setSubcategorias((prev) => [...prev, novaSub]);
+        alert(resposta.data.mensagem);
+      }
+    } catch (err) {
+      console.error("Erro ao adicionar subcategoria:", err);
+      alert("Erro ao adicionar subcategoria");
+    }
+    setNomeSubCat("");
+  };
+
+  const editarNomeSubCat = async (sct_id) => {
+    try {
+      await api.patch(`/servico/subcategorias/${sct_id}`, {
+        nome: nomeSubCat,
+        sct_id: sct_id,
+      });
+      alert("Subcategoria Alterada");
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const editarStatusSubCat = async (sct_id, statusAtual) => {
+    const novoStatus = statusAtual === "ativo" ? "inativo" : "ativo";
+
+    try {
+      await api.patch(`/servico/subcategorias/status/${sct_id}`, {
+        statusSubCat: novoStatus,
+        sct_id,
+      });
+
+      // Atualiza a lista renderizada na tela após a alteração
+      setSubcategorias((prev) =>
+        prev.map((item) =>
+          item.id === sct_id ? { ...item, statusSubcat: novoStatus } : item
+        )
+      );
+
+      alert(`Status alterado para: ${novoStatus}`);
+    } catch (err) {
+      console.error("Erro ao alterar status:", err);
+    }
+  };
+
+  const filtroSubCat = subCategorias.filter(
+    (item) => item.categoria_id == ct_id
+  );
+
+  const salvarCategoria = async () => {
+    try {
+      const dadosAtualizados = {};
+
+      if (nome !== categoria.nome) dadosAtualizados.nome = nome;
+      if (corPrimaria !== categoria.corPrimaria)
+        dadosAtualizados.corPrimaria = corPrimaria;
+      if (corSecundaria !== categoria.corSecundaria)
+        dadosAtualizados.corSecundaria = corSecundaria;
+      if (icone !== categoria.icone) dadosAtualizados.icone = icone;
+
+      if (Object.keys(dadosAtualizados).length === 0) {
+        alert("Nada foi alterado.");
+        return;
+      }
+
+      const resposta = await api.patch(
+        `/servico/categorias/${ct_id}`,
+        dadosAtualizados
+      );
+
+      alert("Categoria atualizada com sucesso!");
+      navigate("/servicos");
+      console.log(resposta.data);
+    } catch (error) {
+      console.error("Erro ao salvar categoria:", error);
+      alert("Erro ao salvar categoria.");
     }
   };
 
@@ -55,8 +160,8 @@ function CategoriaEdit() {
                 <input
                   type="text"
                   className={style.inputNome}
-                  placeholder={categoria.nome}
                   onChange={(e) => setNome(e.target.value)}
+                  defaultValue={categoria.nome}
                 />
               </div>
               <div className={style.formLinha2}>
@@ -64,18 +169,18 @@ function CategoriaEdit() {
                   <p>Cor 1:</p>
                   <input
                     type="color"
-                    defaultValue={cor}
+                    defaultValue={categoria.corPrimaria}
                     className={style.inputColor}
-                    onChange={(e) => setCor(e.target.value)}
+                    onChange={(e) => setCorPrimaria(e.target.value)}
                   />
                 </div>
                 <div className={style.inputL2}>
                   <p>Cor 2:</p>
                   <input
                     type="color"
-                    defaultValue={cor2}
                     className={style.inputColor}
-                    onChange={(e) => setCor2(e.target.value)}
+                    onChange={(e) => setCorSecundaria(e.target.value)}
+                    defaultValue={categoria.corSecundaria}
                   />
                 </div>
                 <div
@@ -90,7 +195,7 @@ function CategoriaEdit() {
                     <input
                       type="text"
                       onChange={(e) => setIcone(e.target.value)}
-                      defaultValue={icone}
+                      defaultValue={categoria.icone}
                     />
                     <span
                       className="material-symbols-rounded"
@@ -101,7 +206,7 @@ function CategoriaEdit() {
                     </span>
                   </div>
                   <p style={{ fontSize: "x-small" }}>
-                    Para adicionar um novo ícone, vá até o site{" "}
+                    Para adicionar um novo ícone, vá até o site
                     <a
                       href="https://fonts.google.com/icons"
                       target="_blank"
@@ -118,18 +223,18 @@ function CategoriaEdit() {
                 <div
                   className={style.previaIcone}
                   style={{
-                    backgroundColor: cor,
-                    boxShadow: `3px 3px 10px ${cor + "50"}`,
+                    backgroundColor: corPrimaria,
+                    boxShadow: `3px 3px 10px ${corPrimaria + "50"}`,
                   }}
                 >
                   <span
                     className="material-symbols-rounded"
-                    style={{ color: cor2 }}
+                    style={{ color: corSecundaria }}
                   >
                     {icone}
                   </span>
                 </div>
-                <h1 style={{ color: cor }}>{nome}</h1>
+                <h1 style={{ color: corPrimaria }}>{nome}</h1>
               </div>
             </form>
             <div className={style.dividerH}></div>
@@ -141,7 +246,7 @@ function CategoriaEdit() {
               <div className={style.dividerH}></div>
               <input
                 type="text"
-                name=""
+                name="subcategoria"
                 id=""
                 onChange={(e) => setNomeSubCat(e.target.value)}
               />
@@ -153,7 +258,9 @@ function CategoriaEdit() {
                   justifyContent: "center",
                   gap: "10px",
                 }}
-                onClick={() => adicionarSubcategoria()}
+                onClick={() => {
+                  adicionarSubcategoria();
+                }}
               >
                 <span className="material-symbols-rounded"> playlist_add </span>
                 Adicionar
@@ -166,22 +273,90 @@ function CategoriaEdit() {
                   <th>Id</th>
                   <th>Nome</th>
                   <th>Editar</th>
-                  <th>X</th>
+                  <th> - </th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {subCategorias.map((subcategoria) => {
+                {filtroSubCat.map((subcategoria) => {
                   return (
-                    <tr key={subcategoria.subcategoria_id}>
-                      <td>{subcategoria.subcategoria_id}</td>
-                      <td>
-                        <input type="text" placeholder={subcategoria.nome} className={style.inputLista}/>
+                    <tr
+                      key={subcategoria.id}
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "space-beetwen",
+                      }}
+                    >
+                      <td
+                        style={{
+                          paddingLeft: "15px",
+                        }}
+                      >
+                        {subcategoria.id}
                       </td>
                       <td>
-                        <span className="material-symbols-rounded">edit</span>
+                        <input
+                          type="text"
+                          defaultValue={subcategoria.nome}
+                          className={style.inputLista}
+                          onChange={(e) => setNomeSubCat(e.target.value)}
+                        />
                       </td>
                       <td>
-                        <span className="material-symbols-rounded">block</span>
+                        <span
+                          className={`material-symbols-rounded ${style.btnEditSubClass}`}
+                          style={{ fontSize: "medium" }}
+                          onClick={() => editarNomeSubCat(subcategoria.id)}
+                        >
+                          edit
+                        </span>
+                      </td>
+                      <td>
+                        <div
+                          style={{
+                            width: "100px",
+                            height: "25px",
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: "15px",
+                            backgroundColor:
+                              subcategoria.statusSubcat === "ativo"
+                                ? "green"
+                                : "#950505",
+                            color:
+                              subcategoria.statusSubcat === "ativo"
+                                ? "greenyellow"
+                                : "#ff582a",
+                          }}
+                        >
+                          {subcategoria.statusSubcat === "ativo"
+                            ? "Ativo"
+                            : "Inativo"}
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          className={style.btnBloquear}
+                          title={
+                            statusSubCat === "ativo"
+                              ? "Inativar Subcategoria"
+                              : "Ativar Subcategoria"
+                          }
+                          onClick={() => {
+                            editarStatusSubCat(
+                              subcategoria.id,
+                              subcategoria.statusSubcat
+                            );
+                          }}
+                        >
+                          <span className="material-symbols-rounded">
+                            {subcategoria.statusSubcat === "ativo"
+                              ? "lock_open"
+                              : "lock"}
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -200,8 +375,9 @@ function CategoriaEdit() {
                 gap: "15px",
               }}
             >
-              <a href="/servicos">cancelar</a>
+              <a href="/servicos">Voltar</a>
               <button
+                onClick={() => salvarCategoria()}
                 style={{
                   display: "flex",
                   flexDirection: "row",

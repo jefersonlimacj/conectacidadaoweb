@@ -1,9 +1,25 @@
 import style from "../componentes/css/navMenu.module.css";
 import { useNavigate, NavLink } from "react-router-dom";
-import categorias from "../jsons/categorias.json";
+// import categorias from "../jsons/categorias.json";
+import api from "../../service/api";
+import { useState, useEffect } from "react";
 
 function NavMenu() {
   const navigate = useNavigate();
+
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    const carregarCategorias = async () => {
+      try {
+        const pegarCat = await api.get("/servico/categorias");
+        setCategorias(pegarCat.data.result);
+      } catch (err) {
+        throw err;
+      }
+    };
+    carregarCategorias();
+  }, []);
 
   return (
     <>
@@ -80,10 +96,8 @@ function NavMenu() {
                   {categorias.map((categoria) => {
                     return (
                       <li
-                        key={categoria.categoria_id}
-                        onClick={() =>
-                          navigate(`/servico/${categoria.categoria_id}`)
-                        }
+                        key={categoria.id}
+                        onClick={() => navigate(`/servico/${categoria.id}`)}
                       >
                         {categoria.nome}
                       </li>

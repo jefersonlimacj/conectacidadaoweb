@@ -114,14 +114,14 @@
   gap: 15px;
 }
 
-.cadastroNovaSubCat input{
+.cadastroNovaSubCat input {
   width: 50%;
 }
-.cadastroNovaSubCat p{
+.cadastroNovaSubCat p {
   width: 20%;
 }
 
-.cadastroNovaSubCat div{
+.cadastroNovaSubCat div {
   width: 15%;
 }
 
@@ -129,38 +129,59 @@
   width: 25%;
 }
 
-.cadastroNovaSubCat span{
-  color: white
+.cadastroNovaSubCat span {
+  color: white;
 }
 
-.tabelaSubcategorias{
+.tabelaSubcategorias {
   margin: 15px;
   text-align: left;
   font-size: small;
 }
 
-.tabelaSubcategorias span{
+.inputLista {
+  outline: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 15px 0 0 15px;
+  width: 100%;
+}
+
+.btnEditSubClass {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 5px;
-  border-radius: 10px;
+  border: 1px;
+  border-radius: 0 15px 15px 0;
   width: 4vw;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  background-color: #bbb;
 }
 
-.tabelaSubcategorias span:hover{
-  background-color: #BBB;
+.btnEditSubClass:hover {
+  background: #055695;
+  color: white;
 }
 
-.inputLista {
-  outline: none;
-  background-color: transparent;
-  border: none;
-  width: 100%;
+.btnBloquear {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
 
-.inputLista::placeholder {
-  color: gray;
+.btnBloquear span {
+  font-size: medium;
+}
+
+.btnBloquear:hover {
+  background-color: #bbb;
 }
