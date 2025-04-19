@@ -14,11 +14,10 @@ function Servico() {
   const { ct_id } = useParams();
   const navigate = useNavigate();
 
-  
   const [lista, setLista] = useState([]);
-  
+
   const [categoria, setCategoria] = useState([]);
-  
+
   const [Subcategorias, setSubcategorias] = useState([]);
 
   const [detalhesCategoria, setDetalhesCategoria] = useState(ct_id);
@@ -30,12 +29,12 @@ function Servico() {
         const respostaSubCategoria = await api.get(`/servico/subcategorias`);
         let dados = respostaCategoria.data.result[0];
         let listaSub = respostaSubCategoria.data.result;
-        let filtroListaSub = listaSub.filter((item) => item.categoria_id === dados.id)
+        let filtroListaSub = listaSub.filter(
+          (item) => item.categoria_id === dados.id
+        );
         setCategoria(dados);
         setSubcategorias(filtroListaSub);
-        setDetalhesCategoria(dados)
-
-        console.log(dados, filtroListaSub)
+        setDetalhesCategoria(dados);
       } catch (err) {
         throw err;
       }
@@ -47,11 +46,9 @@ function Servico() {
     return sol.categoria_id === categoria.id;
   });
 
-  const solCatSubN = solCategorias.map((item) => {
-    return { subcategoria_id: item.subcategoria_id, id: item.id };
+  const resSubCategoria = Subcategorias.filter((item) => {
+    return item.categoria_id === categoria.id;
   });
-
-  const resSubCategoria = Subcategorias.filter((item) => item.categoria_id === categoria.id)
 
   const determinarLista = (subCatId) => {
     const lista = solCategorias.filter(
@@ -102,7 +99,7 @@ function Servico() {
                   title="Editar Categoria"
                   onClick={() =>
                     navigate(
-                      `/editarcategoria/${detalhesCategoria.categoria_id}`
+                      `/editarcategoria/${ct_id}`
                     )
                   }
                 >
@@ -182,16 +179,17 @@ function Servico() {
               </thead>
               <tbody>
                 {resSubCategoria.map((item) => {
+                  const totalSolicitacoes = solicitacoes.filter(
+                    (sol) => sol.subcategoria_id === item.id
+                  ).length;
+
                   return (
-                    <tr
-                      key={item.id}
-                      onClick={() => determinarLista(item.id)}
-                    >
-                      <td style={{paddingLeft:"15px"}}>
+                    <tr key={item.id} onClick={() => determinarLista(item.id)}>
+                      <td style={{ paddingLeft: "15px" }}>
                         <strong>{item.id}</strong>
                       </td>
                       <td>{item.nome}</td>
-                      <td>{item.quantidade}</td>
+                      <td>{totalSolicitacoes}</td>
                     </tr>
                   );
                 })}

@@ -65,7 +65,7 @@ function Servicos() {
                 alignItems: "center",
               }}
             >
-              <p>Criar Nova Categoria</p>
+              <p style={{ textWrap: "nowrap" }}>Criar Nova Categoria</p>
               <div className={style.dividerH}></div>
               <button onClick={() => navigate("/criarcategoria")}>Criar</button>
             </div>

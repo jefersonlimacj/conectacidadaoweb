@@ -53,7 +53,7 @@ function CardTabela({
   const [subcategoria, setSubcategoria] = useState([]);
 
   useEffect(() => {
-    const pegarUsuario = async () => {
+    const buscarDados = async () => {
       try {
         const dadosUsuario = await api.get(`/cadastro/usuarios`);
         const dadosCategoria = await api.get(`/servico/categorias`);
@@ -65,14 +65,12 @@ function CardTabela({
         console.error("Erro ao buscar usuário:", error);
       }
     };
-    pegarUsuario();
+    buscarDados();
   }, []);
 
   const solicitacoes = _listaSolicitacoes;
   //usar essa const para filtrar depois, apenas as "Processando Envio"
-
-  console.log(solicitacoes)
-
+  
   const mudarOrdem = (coluna) => {
     setOrdem(coluna === colunaOrdem ? -ordem : 1);
     setColunaOrdem(coluna);
@@ -132,9 +130,6 @@ function CardTabela({
           {ordemSolicitacoes.map((solicitacao) => {
             const urlImage = `https://picsum.photos/seed/${solicitacao.id}-1/200`;
             const statusInfo = iconStatus(solicitacao.status);
-
-            console.log(solicitacao)
-
             return (
               <tr
                 key={solicitacao.protocolo}

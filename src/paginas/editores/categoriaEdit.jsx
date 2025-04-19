@@ -78,7 +78,6 @@ function CategoriaEdit() {
         nome: nomeSubCat,
         sct_id: sct_id,
       });
-      alert("Subcategoria Alterada");
     } catch (err) {
       throw err;
     }
@@ -99,8 +98,6 @@ function CategoriaEdit() {
           item.id === sct_id ? { ...item, statusSubcat: novoStatus } : item
         )
       );
-
-      alert(`Status alterado para: ${novoStatus}`);
     } catch (err) {
       console.error("Erro ao alterar status:", err);
     }

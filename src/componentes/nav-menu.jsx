@@ -40,27 +40,35 @@ function NavMenu() {
                 Mapa
               </li>
             </NavLink>
-            <NavLink to="/dashboard">
-              <li>
-                <span className="material-symbols-rounded"> grid_view </span>
-                Dashboard
-              </li>
-            </NavLink>
             <li>
-              <span className="material-symbols-rounded"> finance </span>
-              Relatórios
-              <i className="material-symbols-rounded"> arrow_right </i>
+              <div
+                onClick={() => navigate("/relatorios")}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <span className="material-symbols-rounded">finance</span>
+                Relatórios
+                <i className="material-symbols-rounded"> arrow_right </i>
+              </div>
+
               <div className={style.subMenu}>
                 <div className={style.headSubMenu}>
                   <span className="material-symbols-rounded"> finance </span>
                   Relatórios
                 </div>
                 <ul>
+                  <NavLink to="/dashboard">
+                    <li> Solicitações </li>
+                  </NavLink>
                   <NavLink to="/usuarios">
                     <li> Usuários </li>
                   </NavLink>
-                  <NavLink>
-                    <li> Secretarias </li>
+                  <NavLink to="/setorresponsavel">
+                    <li> Setores </li>
                   </NavLink>
                 </ul>
               </div>
@@ -71,6 +79,12 @@ function NavMenu() {
                   mark_chat_unread
                 </span>
                 Solicitações
+              </li>
+            </NavLink>
+            <NavLink to="/setores">
+              <li>
+                <span className="material-symbols-rounded"> grid_view </span>
+                Setor
               </li>
             </NavLink>
             <li>

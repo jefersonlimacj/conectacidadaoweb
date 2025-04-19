@@ -35,7 +35,7 @@ function Usuario() {
   };
 
   const solicitacoes = solicitacoesEfetuadas.filter(
-    (solicitacao) => solicitacao.usuario_id === usuario.id - 1 // <<<--- CORRIGIR ISSO DEPOIS
+    (solicitacao) => solicitacao.usuario_id === usuario.id
   );
 
   const totalSolicitacoes = solicitacoes.length;

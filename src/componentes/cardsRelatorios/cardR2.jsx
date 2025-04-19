@@ -2,6 +2,8 @@ import style from "./css/cardR2.module.css";
 import { Bar } from "react-chartjs-2";
 import categorias from "../../jsons/categorias.json";
 import solicitacoes from "../../jsons/solicitacoesEfeturadas.json";
+import { useState, useEffect } from "react";
+import api from "../../../service/api";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -22,33 +24,31 @@ ChartJS.register(
 );
 
 function CardR2() {
-  const nomesCategorias = categorias.map((categoria) => categoria.nome);
+  const [categoria, setCategoria] = useState([]);
+  const [subcategoria, setSubcategoria] = useState([]);
 
-  const abastecimento = solicitacoes.filter((item) => item.categoria_id === 0);
-  const comercio = solicitacoes.filter((item) => item.categoria_id === 1);
-  const energia = solicitacoes.filter((item) => item.categoria_id === 2);
-  const limpeza = solicitacoes.filter((item) => item.categoria_id === 3);
-  const ambiente = solicitacoes.filter((item) => item.categoria_id === 4);
-  const pedestre = solicitacoes.filter((item) => item.categoria_id === 5);
-  const saude = solicitacoes.filter((item) => item.categoria_id === 6);
-  const seguranca = solicitacoes.filter((item) => item.categoria_id === 7);
-  const transporte = solicitacoes.filter((item) => item.categoria_id === 8);
-  const urbanismo = solicitacoes.filter((item) => item.categoria_id === 9);
-  const transito = solicitacoes.filter((item) => item.categoria_id === 10);
+  useEffect(() => {
+    const buscarDados = async () => {
+      try {
+        const dadosCategoria = await api.get(`/servico/categorias`);
+        const dadosSubcategoria = await api.get(`/servico/subcategorias`);
+        setCategoria(dadosCategoria.data.result);
+        setSubcategoria(dadosSubcategoria.data.result);
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+    buscarDados();
+  }, []);
 
-  const resumoDetalhe = [
-    abastecimento.length,
-    comercio.length,
-    energia.length,
-    limpeza.length,
-    ambiente.length,
-    pedestre.length,
-    saude.length,
-    seguranca.length,
-    transporte.length,
-    urbanismo.length,
-    transito.length,
-  ];
+  const nomesCategorias = categoria.map((categoria) => categoria.nome);
+
+  const resumoDetalhe = categoria.map((item) => {
+    const cat = solicitacoes.filter(
+      (solicitacao) => solicitacao.categoria_id === item.id
+    );
+    return cat.length;
+  });
 
   return (
     <>
@@ -110,9 +110,9 @@ function CardR2() {
           />
         </div>
         <div className={style.linha}>
-          {categorias.map((categoria) => {
+          {categoria.map((categoria) => {
             return (
-              <div key={categoria.categoria_id} className={style.espLinha}>
+              <div key={categoria.id} className={style.espLinha}>
                 <p>{categoria.nome}</p>
               </div>
             );

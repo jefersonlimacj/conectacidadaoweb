@@ -48,7 +48,7 @@ function EditarUsuario() {
 
       alert(response.data.mensagem);
 
-      navigate("/cadastros/usuarioslista")
+      navigate("/cadastros/usuarioslista");
     } catch (erro) {
       console.error("Erro ao atualizar usuário:", erro);
       alert("Erro ao atualizar usuário.");
@@ -56,7 +56,6 @@ function EditarUsuario() {
   };
 
   useEffect(() => {
-    
     ////////////////////////////////////////////////  -- TRAZ TODAS AS INFORMAÇÕES DO USUÁRIO DO BANCO
 
     const pegarUsuario = async () => {
@@ -360,9 +359,12 @@ function EditarUsuario() {
               </div>
               <div className={style.dividerH} />
             </form>
-            <button className={style.submitBtn} onClick={atualizarUsuario}>
-              Atualizar
-            </button>
+            <div style={{ display: "flex", flexDirection: "row", gap: "15px", width:"100%", alignItems:"center", justifyContent:"center" }}>
+              <a href="/cadastros/usuarioslista">Voltar</a>
+              <button className={style.submitBtn} onClick={atualizarUsuario}>
+                Atualizar
+              </button>
+            </div>
           </div>
         </div>
       </div>

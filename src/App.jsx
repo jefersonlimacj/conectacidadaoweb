@@ -21,6 +21,10 @@ import CriarGestor from "./paginas/editores/gestorStart";
 import EditarGestor from "./paginas/editores/gestoredit";
 import CriarUsuario from "./paginas/editores/usuarioStart";
 import EditarUsuario from "./paginas/editores/usuarioEdit";
+import SetorResponsavel from "./paginas/setorResponsavel";
+import CriarSetor from "./paginas/editores/setorStart";
+import EditarSetor from "./paginas/editores/setorEdit";
+import Relatorios from "./paginas/relatorios";
 
 function App() {
   return (
@@ -33,6 +37,7 @@ function App() {
           <Route path="/recuperar-senha2" element={<RecuperarSenha2 />} />
           <Route path="/inatividade" element={<Inatividade />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/relatorios" element={<Relatorios />} />
           <Route path="/registro/:p_id" element={<Registro />} />
           <Route path="/solicitacoes" element={<Solicitacoes />} />
           <Route path="/usuarios" element={<Usuarios />} />
@@ -44,6 +49,7 @@ function App() {
           <Route path="/criarcategoria" element={<CategoriaStart />} />
           <Route path="/cadastros" element={<Cadastros />} />
           <Route path="/cadastros/gestoreslista" element={<GestoresLista />} />
+          <Route path="/setores" element={<SetorResponsavel />} />
           <Route
             path="/cadastros/gestoreslista/criar"
             element={<CriarGestor />}
@@ -60,6 +66,11 @@ function App() {
           <Route
             path="/cadastros/usuarioslista/editar/:u_id"
             element={<EditarUsuario />}
+          />
+          <Route path="/servico/setor/criar" element={<CriarSetor />} />
+          <Route
+            path="/servico/setor/editar/:st_id"
+            element={<EditarSetor />}
           />
         </Routes>
       </BrowserRouter>

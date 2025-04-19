@@ -14,7 +14,7 @@
     gap: 15px;
     flex-direction: column;
     justify-content: start;
-    padding-bottom: 15px;
+    padding: 15px;
   }
 
   .base {
@@ -24,12 +24,13 @@
     border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 15px;
     font-size: 0.8rem;
     gap: 5px;
     text-align: left;
-    
   }
 
   .dividerH {
@@ -37,3 +38,37 @@
     height: 1px;
     background-color: #ccc;
   }
+
+  
+.formCadastro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    & input {
+      width: 100%;
+      outline: none;
+    }
+    & h3 {
+      color: #055695;
+    }
+    & div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    & h4 {
+      text-align: left;
+    }
+    & .submitBtn {
+      background-color: #055695;
+      color: white;
+      width: 30%;
+      align-self: self-end;
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+  

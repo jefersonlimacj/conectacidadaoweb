@@ -3,11 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import TopMenu from "../../componentes/top-menu";
 import NavMenu from "../../componentes/nav-menu";
 import solicitacoes from "../../jsons/solicitacoesEfeturadas.json";
-import usuarios from "../../jsons/usuarios.json";
+// import usuarios from "../../jsons/usuarios.json";
 import categorias from "../../jsons/categorias.json";
 import subcategorias from "../../jsons/subcategoria.json";
 import style from "../css/registro.module.css";
-import useUsuario from "../../../service/hooks/hookUsuario";
 import api from "../../../service/api";
 
 const statusIcones = {
@@ -63,16 +62,23 @@ function Registro() {
   const solicitacao = solicitacoes[p_id];
 
   const [usuario, setUsuario] = useState();
+  const [categoria, setCategoria] = useState([]);
+  const [subcategoria, setSubcategoria] = useState([]);
 
   useEffect(() => {
     const pegarUsuario = async () => {
       try {
         const response = await api.get(
-          `/cadastro/usuarios/${solicitacao.usuario_id + 1 }` //REMOVER + 1
+          `/cadastro/usuarios/${solicitacao.usuario_id}` //REMOVER + 1
         );
+
+        const dadosCategoria = await api.get(`/servico/categorias`);
+        const dadosSubcategoria = await api.get(`/servico/subcategorias`);
         const dados = response.data.result[0];
 
         setUsuario(dados);
+        setCategoria(dadosCategoria.data.result);
+        setSubcategoria(dadosSubcategoria.data.result);
       } catch (error) {
         console.log(error);
       }
@@ -80,8 +86,6 @@ function Registro() {
 
     pegarUsuario();
   }, []);
-
-  console.log(solicitacao, usuario);
 
   const atualizacoesS = {
     versaoAtt: 1,
@@ -199,7 +203,7 @@ function Registro() {
             className={style.base}
             style={{
               background: `linear-gradient(135deg, ${
-                categorias[solicitacao.categoria_id]?.corPrimaria  + "50"
+                categoria[solicitacao.categoria_id - 1]?.corPrimaria + "50"
               }, #ffffff, #ffffff )`,
             }}
           >
@@ -209,42 +213,48 @@ function Registro() {
                   className={style.iconCategoria}
                   style={{
                     backgroundColor:
-                      categorias[solicitacao.categoria_id]?.corPrimaria || "#000000",
+                      categoria[solicitacao.categoria_id - 1]?.corPrimaria ||
+                      "#000000",
                   }}
                 >
                   <span
                     className="material-symbols-rounded"
                     style={{
                       color:
-                        categorias[solicitacao.categoria_id]?.corSecundaria ||
-                        "#FFFFFF",
+                        categoria[solicitacao.categoria_id - 1]
+                          ?.corSecundaria || "#CCC",
                     }}
                   >
-                    {categorias[solicitacao.categoria_id]?.icone || "help"}
+                    {categoria[solicitacao.categoria_id - 1]?.icone || "help"}
                   </span>
                 </div>
                 <div className={style.dadosSolicitacao}>
                   <p
                     className={style.tituloSubCategoria}
-                    style={{ color: categorias[solicitacao.categoria_id]?.corPrimaria }}
+                    style={{
+                      color:
+                        categoria[solicitacao.categoria_id - 1]?.corPrimaria,
+                    }}
                   >
-                    {subcategorias[solicitacao.subcategoria_id]?.nome ||
+                    {subcategoria[solicitacao.subcategoria_id - 1]?.nome ||
                       "Sem informação"}
                   </p>
                   <p className={style.subTituloCategoria}>
-                    {categorias[solicitacao.categoria_id]?.nome ||
+                    {categoria[solicitacao.categoria_id - 1]?.nome ||
                       "Sem informação"}
                   </p>
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <p>Solicitante:</p>
                     <a
-                      onClick={() =>
-                        navigate(`/usuario/${solicitacao.usuario_id + 1}`) //REMOVER + 1
+                      onClick={
+                        () => navigate(`/usuario/${solicitacao.usuario_id}`) //REMOVER + 1
                       }
                       style={{ cursor: "pointer" }}
                     >
                       <p style={{ fontWeight: "bold", margin: "0 10px" }}>
-                        {`${usuario?.nome || "Carregando..."} ${usuario?.sobrenome || ""}`}
+                        {`${usuario?.nome || "Carregando..."} ${
+                          usuario?.sobrenome || ""
+                        }`}
                       </p>
                     </a>
                   </div>
@@ -342,24 +352,6 @@ function Registro() {
                         gap: "5px",
                       }}
                     >
-                      <p>Op1:</p>
-                      <select name="" id="">
-                        {setor.map((set) => (
-                          <option key={set} value={set}>
-                            {set}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <p>Op2:</p>
                       <select name="" id="">
                         {setor.map((set) => (
                           <option key={set} value={set}>
